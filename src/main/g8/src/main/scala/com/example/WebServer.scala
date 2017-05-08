@@ -2,12 +2,13 @@ package com.example
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model._
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.model.{ ContentTypes, HttpEntity }
+import akka.http.scaladsl.server.Directives
 import akka.stream.ActorMaterializer
+
 import scala.io.StdIn
 
-object WebServer {
+object WebServer extends Directives {
   def main(args: Array[String]) {
 
     implicit val system = ActorSystem("my-system")
@@ -25,10 +26,13 @@ object WebServer {
   }
 
   // Here you can define all the different routes you want to have served by this web server.
-  val route = path("hello") { // Listens to paths that are exactly `/hello`
-    get { // Listens only to GET requests
-      complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>")) // Completes with some text
+  val route = pathEndOrSingleSlash { // Listens to the top `/`
+    complete("Server up and running") // Completes with some text
+  } ~
+    path("hello") { // Listens to paths that are exactly `/hello`
+      get { // Listens only to GET requests
+        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>")) // Completes with some text
+      }
     }
-  }
 
 }
