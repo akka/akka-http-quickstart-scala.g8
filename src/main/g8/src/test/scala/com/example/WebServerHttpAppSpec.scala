@@ -1,13 +1,16 @@
 package com.example
 
+import akka.http.scaladsl.marshallers.xml.ScalaXmlSupport
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.{ Matchers, WordSpec }
 
-class WebServerHttpAppSpec extends WordSpec with Matchers with ScalatestRouteTest {
+import scala.xml.NodeSeq
 
-  "WebService" should {
+class WebServerHttpAppSpec extends WordSpec with Matchers with ScalatestRouteTest with ScalaXmlSupport {
+
+  "WebServiceHttpApp" should {
     "answer to any request to `/`" in {
       Get("/") ~> WebServer.route ~> check {
         status shouldBe StatusCodes.OK
@@ -21,7 +24,7 @@ class WebServerHttpAppSpec extends WordSpec with Matchers with ScalatestRouteTes
     "answer to GET requests to `/hello`" in {
       Get("/hello") ~> WebServerHttpApp.route ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[String] shouldBe "<h1>Say hello to akka-http</h1>"
+        responseAs[NodeSeq] shouldBe <html><body><h1>Say hello to akka-http</h1></body></html>
       }
     }
     "not handle a POST request to `/hello`" in {
