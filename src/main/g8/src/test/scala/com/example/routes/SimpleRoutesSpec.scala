@@ -7,22 +7,22 @@ import org.scalatest.{ Matchers, WordSpec }
 
 import scala.xml.NodeSeq
 
-class SimpleRouteSpec extends WordSpec with Matchers with ScalatestRouteTest with SimpleRoute {
+class SimpleRoutesSpec extends WordSpec with Matchers with ScalatestRouteTest with SimpleRoutes {
 
   "SimpleRoute" should {
     "answer to GET requests to `/hello`" in {
-      Get("/hello") ~> simpleRoute ~> check {
+      Get("/hello") ~> simpleRoutes ~> check {
         status shouldBe StatusCodes.OK
         responseAs[NodeSeq] shouldBe <html><body><h1>Say hello to akka-http</h1></body></html>
       }
     }
     "not handle a POST request to `/hello`" in {
-      Post("/hello") ~> simpleRoute ~> check {
+      Post("/hello") ~> simpleRoutes ~> check {
         handled shouldBe false
       }
     }
     "respond with 405 when not issuing a GET to `/hello` and route is sealed" in {
-      Put("/hello") ~> Route.seal(simpleRoute) ~> check {
+      Put("/hello") ~> Route.seal(simpleRoutes) ~> check {
         status shouldBe StatusCodes.MethodNotAllowed
       }
     }

@@ -12,11 +12,11 @@ class WebServerHttpAppSpec extends WordSpec with Matchers with ScalatestRouteTes
 
   "WebServiceHttpApp" should {
     "answer to any request to `/`" in {
-      Get("/") ~> WebServer.route ~> check {
+      Get("/") ~> WebServer.routes ~> check {
         status shouldBe StatusCodes.OK
         responseAs[String] shouldBe "Server up and running"
       }
-      Post("/") ~> WebServer.route ~> check {
+      Post("/") ~> WebServer.routes ~> check {
         status shouldBe StatusCodes.OK
         responseAs[String] shouldBe "Server up and running"
       }

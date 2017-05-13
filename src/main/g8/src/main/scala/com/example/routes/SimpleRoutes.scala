@@ -8,10 +8,10 @@ import akka.http.scaladsl.server.directives.RouteDirectives.complete
 /**
   * Routes can be defined in separated classes like shown in here
   */
-trait SimpleRoute extends ScalaXmlSupport {
+trait SimpleRoutes extends ScalaXmlSupport {
 
   // This `val` holds one route (of possibly many more that will be part of your Web App)
-  val simpleRoute = path("hello") { // Listens to paths that are exactly `/hello`
+  val simpleRoutes = path("hello") { // Listens to paths that are exactly `/hello`
     get { // Listens only to GET requests
       complete(<html><body><h1>Say hello to akka-http</h1></body></html>) // Completes with some html page
     }
