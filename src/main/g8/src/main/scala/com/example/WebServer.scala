@@ -8,7 +8,7 @@ import com.example.routes.{ BaseRoutes, SimpleRoutes }
 
 import scala.io.StdIn
 
-object WebServer extends Directives with BaseRoutes with SimpleRoutes {
+object WebServer extends Directives with SimpleRoutes {
   def main(args: Array[String]) {
 
     implicit val system = ActorSystem("my-system")
@@ -27,6 +27,6 @@ object WebServer extends Directives with BaseRoutes with SimpleRoutes {
 
   // Here you can define all the different routes you want to have served by this web server
   // Note that routes might be defined in separated traits like the current case
-  val routes = baseRoutes ~ simpleRoutes
+  val routes = BaseRoutes.baseRoutes ~ simpleRoutes
 
 }

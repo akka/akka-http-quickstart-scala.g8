@@ -1,6 +1,6 @@
 package com.example
 
-import akka.http.scaladsl.marshallers.xml.ScalaXmlSupport
+import akka.http.scaladsl.marshallers.xml.ScalaXmlSupport.defaultNodeSeqUnmarshaller
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
@@ -8,7 +8,7 @@ import org.scalatest.{ Matchers, WordSpec }
 
 import scala.xml.NodeSeq
 
-class WebServerHttpAppSpec extends WordSpec with Matchers with ScalatestRouteTest with ScalaXmlSupport {
+class WebServerHttpAppSpec extends WordSpec with Matchers with ScalatestRouteTest {
 
   "WebServiceHttpApp" should {
     "answer to any request to `/`" in {
