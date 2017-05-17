@@ -18,9 +18,9 @@ This template will prompt for the following parameters. Press `Enter` if the def
 
 This template comes with 2 different ways to implement an Akka HTTP server, along with their respective tests.
 
-- HttpServer: This is the manual way to start a server.For this case, routes are defined in separated classes: the object `com.example.routes.BaseRoutes` 
+- HttpServer: This is the manual way to start a server. For this case, routes are defined in separated classes: the object `com.example.routes.BaseRoutes` 
 and the trait `com.example.routes.SimpleRoutes`.
-- HttpServerHttpApp: This server is started using the new bleeding-edge `HttpApp` which bootstraps a server with just a few lines.
+- HttpServerHttpApp: This server is started using the recently introduced `HttpApp`, which bootstraps a server with just a few lines.
 For this particular case, the routes are defined in the same class, but you can also define them in separated traits or objects.
 
 Once inside the project folder, to run this code, you can use any of the following commands:
@@ -43,7 +43,7 @@ to directly run the specified file.
 
 Template license
 ----------------
-Written in 2014-2017 by Lightbend, Inc.
+Written in 2017 by Lightbend, Inc.
 
 To the extent possible under law, the author(s) have dedicated all copyright and related
 and neighboring rights to this template to the public domain worldwide.
