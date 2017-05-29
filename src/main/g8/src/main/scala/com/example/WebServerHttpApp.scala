@@ -9,7 +9,8 @@ import akka.http.scaladsl.server.{ HttpApp, Route }
  */
 object WebServerHttpApp extends HttpApp with App {
   // Routes that this WebServer must handle are defined here
-  def route: Route =
+  // Please note this method was named `route` in versions prior to 10.0.7
+  def routes: Route =
     pathEndOrSingleSlash { // Listens to the top `/`
       complete("Server up and running") // Completes with some text
     } ~
