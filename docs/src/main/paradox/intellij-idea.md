@@ -1,7 +1,7 @@
 IntelliJ IDEA
 -------------
 
-[IntelliJ](https://www.jetbrains.com/idea/) from JetBrains is one of the leading IDEs in the Java/Scala community, and it has excellent support for Akka Http. This section will guide you through setting up, testing and running the sample project.
+[IntelliJ](https://www.jetbrains.com/idea/) from JetBrains is one of the leading IDEs in the Java/Scala community, and it has excellent support for Akka HTTP. This section will guide you through setting up, testing and running the sample project.
 
 ## Setting up the project
 
@@ -23,4 +23,4 @@ Right click on the file `src/main/scala/com/lightbend/akka/http/sample/Quickstar
 
 ## Tutorial done!
 
-Congratulations! We have now learned enough concepts to get started with building real-world Akka Http applications. Of course, there is plenty of more that we can do with Akka Http and the [documentation](http://doc.akka.io/docs/akka-http/current/scala/http/index.html) is a good starting point if there is something more you need.
+Congratulations! We have now learned enough concepts to get started with building real-world Akka HTTP applications. Of course, there is plenty of more that we can do with Akka HTTP and the [documentation](http://doc.akka.io/docs/akka-http/current/scala/http/index.html) is a good starting point if there is something more you need.

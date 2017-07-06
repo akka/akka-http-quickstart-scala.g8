@@ -11,7 +11,7 @@ See the `JsonSupport` up there? This is a trait that we have created and it look
 
 @@snip [JsonSupport.scala]($g8src$/scala/com/lightbend/akka/http/sample/JsonSupport.scala)
 
-The above trait defines two implicit values; `userJsonFormat` and `usersJsonFormat`. To do so we use the `jsonFormatX` methods, from [Spray Json](),  where X is representing the number of parameters in the underlying case classes:
+The above trait defines two implicit values; `userJsonFormat` and `usersJsonFormat`. To do so we use the `jsonFormatX` methods, from [Spray Json](https://github.com/spray/spray-json),  where X is representing the number of parameters in the underlying case classes:
 
 @@snip [UserRegistryActor.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRegistryActor.scala) { #user-case-classes }
 

@@ -30,7 +30,7 @@ Press RETURN to stop...
 
 ## Testing the application
 
-The Akka Http server is now running, and we will use the [cURL](https://en.wikipedia.org/wiki/CURL) command to test the application. If you should prefer to use your browser to test the service than a tool like [RESTClient](http://restclient.net/) may be good to install.
+The Akka HTTP server is now running, and we will use the [cURL](https://en.wikipedia.org/wiki/CURL) command to test the application. If you  prefer to use your browser to test the service then a tool like [RESTClient](http://restclient.net/) may be good to install.
 
 Open another console/terminal window to investigate the functionality of the application.
 
@@ -53,7 +53,7 @@ $ curl -H "Content-type: application/json" -X POST -d '{"name": "Bill", "age": 6
 User Bill created.
 ```
 
-We can try to retrieve user information for some various users now:
+We can try to retrieve user information for various users now:
 
 ```
 $ curl http://localhost:8080/user/MrX
