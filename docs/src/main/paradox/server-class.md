@@ -5,7 +5,7 @@ Let's dissect the main class, `QuickstartServer`. We make this class runnable by
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #main-class }
 
-Now that we have a class to run we should add some Akka Http fundamentals with which we will build our RESTful web service:
+Now that we have a class to run we should add some Akka HTTP fundamentals with which we will build our RESTful web service:
 
 * define routes bound to endpoints and HTTP directives
 * create a server bound to an IP and port that will handle all requests
@@ -24,7 +24,7 @@ For our service we want to define the following endpoints:
 | /user/$ID   | DELETE          | Remove a user      | Confirmation message |
 | /users      | GET             | Retrieve all users | JSON payload         |
 
-Akka Http provides a [domain-specific language](https://en.wikipedia.org/wiki/Domain-specific_language) (DSL) to simplify the routes/endpoints definition. Each route is composed of one or more `akka.http.scaladsl.server.Directives`, e.g. `path`, `get`, `post`, `complete`, etc.
+Akka HTTP provides a [domain-specific language](https://en.wikipedia.org/wiki/Domain-specific_language) (DSL) to simplify the routes/endpoints definition. Each route is composed of one or more `akka.http.scaladsl.server.Directives`, e.g. `path`, `get`, `post`, `complete`, etc.
 
 ### Creating a new user
 
@@ -63,7 +63,7 @@ The remaining directives used for this route are:
 * `~` : fuses `Route`s together - this will become more apparent when you see the complete `Route` definition here below.
 * `delete` : matches against the Http directive `DELETE`.
 
-The "business logic" for when deleting a user is straight forward; send an instruction about removing a user to the user registry actor and return a status code to the client (which in this case is `StatusCodes.OK`, i.e. Http 200)
+The "business logic" for when deleting a user is straight forward; send an instruction about removing a user to the user registry actor and return a status code to the client (which in this case is `StatusCodes.OK`, i.e. Http status code 200)
 
 ### Retrieving all users
 
@@ -81,11 +81,11 @@ Below is the complete `Route` definition used in the sample application:
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #all-routes }
 
-So far we have referred to `Route` without explaining what it is but now is the time to do so. Under the hood, Akka Http uses [Akka Streams](http://doc.akka.io/docs/akka/current/scala/stream/index.html). We don't have time to cover Akka Streams here, but if you are interested, you should take a look at the Hello World sample application for Streams. Since Akka Http is built on top of Akka Streams, it means that some concepts of Streams are available for us to use. In the case of `Route` you can think of it as a flow of in- and outbound data which is a perfect fit for Akka Streams. (Technically the `Route` type is `RequestContext ⇒ Future[RouteResult]` but there is no need to worry about what that means now.)
+So far we have referred to `Route` without explaining what it is but now is the time to do so. Under the hood, Akka HTTP uses [Akka Streams](http://doc.akka.io/docs/akka/current/scala/stream/index.html). We don't have time to cover Akka Streams here, but if you are interested, you should take a look at the Hello World sample application for Akka Streams. Since Akka HTTP is built on top of Akka Streams, it means that some concepts of Akka Streams are available for us to use. In the case of `Route` you can think of it as a flow of in- and outbound data which is a perfect fit for Akka Streams. (Technically the `Route` type is `RequestContext ⇒ Future[RouteResult]` but there is no need to worry about what that means now.)
 
 ## Http server
 
-To set up an Akka Http server we must first define some implicit values that will be used by the server:
+To set up an Akka HTTP server we must first define some implicit values that will be used by the server:
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #server-bootstrapping }
 
@@ -98,7 +98,7 @@ With that defined we can move on to instantiate the server:
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #http-server }
 
-We provide three parameters; `routes`, the hostname, and the port. That's it! When running this program, we will have an Akka Http server on our machine (localhost) on port 8080. Note that starting a server happens asynchronously and therefore a `Future` is returned by the `bindAndHandle` method.
+We provide three parameters; `routes`, the hostname, and the port. That's it! When running this program, we will have an Akka HTTP server on our machine (localhost) on port 8080. Note that starting a server happens asynchronously and therefore a `Future` is returned by the `bindAndHandle` method.
 
 We should also add code for stopping the server. To do so we use the `StdIn.readLine()` method that will wait until RETURN is pressed on the keyboard. When that happens we `flatMap` the `Future` returned when we started the server to get to the `unbind()` method. Unbinding is also an asynchronous function and when the `Future` returned by `unbind()` is completes we make sure that the actor system is properly terminated.
 
@@ -106,7 +106,7 @@ We should also add code for stopping the server. To do so we use the `StdIn.read
 
 Finally, we should take a look at how to handle errors. We know, as the astute engineers we are, that errors will happen. We should prepare our program for this and error handling should not be an afterthought when we build systems.
 
-In this sample, we use a very simple exception handler which catches all unexpected exceptions and responds back to the client with an `InternalServerError` (HTTP 500) with an error message and for what URI the exception happened. We extract the URI by using the `extractUri` directive.
+In this sample, we use a very simple exception handler which catches all unexpected exceptions and responds back to the client with an `InternalServerError` (HTTP status code 500) with an error message and for what URI the exception happened. We extract the URI by using the `extractUri` directive.
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #exception-handler }
 
