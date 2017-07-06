@@ -1,4 +1,4 @@
-Akka Http Quickstart with Scala
+Akka HTTP Quickstart with Scala
 ===============================
 
 The Akka HTTP modules implement a full server- and client-side HTTP stack on top of akka-actor and akka-stream.  It’s not a web-framework but rather a more general toolkit for providing and consuming HTTP-based services.  While interaction with a browser is of course also in scope, it is not the primary focus of Akka HTTP.
@@ -9,7 +9,7 @@ This Hello World example demonstrates some Akka HTTP fundamentals. Within 30 min
 
 ## Prerequisite
 
-Having a basic understanding of Akka actors will help the reader of this guide. There is a [getting started guide]((http://developer.lightbend.com/guides/akka-quickstart-scala/)) for Akka actors in if you feel like brushing up your knowledge thereof.
+Having a basic understanding of Akka actors will help the reader of this guide. There is a [getting started guide](https://developer.lightbend.com/guides/akka-quickstart-scala/) for Akka actors should you feel like brushing up your knowledge thereof.
 
 ## Downloading the example
 
@@ -20,7 +20,7 @@ Download and unzip the example:
 1. Download the zip file from Lightbend Tech Hub by clicking `CREATE A PROJECT FOR ME`.
 2. Extract the zip file to a convenient location:
 
-* On Linux and OSX systems, open a terminal and use the command unzip akka-quickstart-scala.zip. Note: On OSX, if you unzip using Archiver, you also have to make the sbt files executable:
+* On Linux and MacOS systems, open a terminal and use the command `unzip` akka-quickstart-scala.zip. Note: On OSX, if you unzip using Archiver, you also have to make the sbt files executable:
 
 ```
 $ chmod u+x ./sbt
@@ -55,9 +55,9 @@ Server online at http://localhost:8080/
 Press RETURN to stop...
 ```
 
-The command above will start an Akka Http server. We will look at how to invoke the available endpoints of the server later in this guide.
+The command above will start an Akka HTTP server. We will look at how to invoke the available endpoints of the server later in this guide.
 
-Congratulations, you just ran your first Akka Http app. Now take a look at what happened under the covers.
+Congratulations, you just ran your first Akka HTTP app. Now take a look at what happened under the covers.
 
 ## What Hello World does
 
