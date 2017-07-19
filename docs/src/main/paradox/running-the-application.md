@@ -11,13 +11,21 @@ sbt uses a build.sbt file to handle the project. This project’s build.sbt file
 
 ## Running the project
 
-We run the application from a console/terminal window:
+We run the application from a console/terminal window and enter the following commands:
 
-1. Enter `./sbt` on OSX/Linux or `sbt.bat` on Windows
+OSX/Linux
+: ```
+$ cd akka-http-quickstart-scala
+$ ./sbt
+> run
+```
 
-sbt downloads project dependencies. The `>` prompt indicates sbt has started in interactive mode.
-
-2. At the sbt prompt, enter `run`.
+Windows
+: ```
+$ cd akka-http-quickstart-scala
+$ sbt.bat
+> run
+```
 
 The output should look like this:
 
@@ -28,9 +36,9 @@ Server online at http://localhost:8080/
 Press RETURN to stop...
 ```
 
-## Testing the application
+## Interacting with the application
 
-The Akka HTTP server is now running, and we will use the [cURL](https://en.wikipedia.org/wiki/CURL) command to test the application. If you  prefer to use your browser to test the service then a tool like [RESTClient](http://restclient.net/) may be good to install.
+The Akka HTTP server is now running, and we will use the [cURL](https://en.wikipedia.org/wiki/CURL) command to test the application. If you prefer to use your browser to test the service then a tool like [RESTClient](http://restclient.net/) may be good to install.
 
 Open another console/terminal window to investigate the functionality of the application.
 

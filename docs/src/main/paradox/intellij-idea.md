@@ -9,11 +9,11 @@ Open IntelliJ and select File -> Open... and point to the directory where you ha
 
 ![Open Project](images/idea-open-project.png)
 
-Fill out the settings according to the above and press `OK` to import the project. If IntelliJ will warn about missing Scala SDK, it is only to follow the instructions to add support.
+Fill out the settings according to the above and press `OK` to import the project. If IntelliJ will warn about missing Scala SDK, just follow the instructions to add support.
 
 ## Inspecting the code
 
-If we open up the file `src/main/scala/com/lightbend/akka/http/sample/QuickstartServer.scala` we can see a lot of lines beginning with //# .... These lines are used as directives for this documentation. To get rid of these lines from the source code we can utilize the awesome Find/Replace functionality in IntelliJ. Select Edit -> Find -> Replace in Path.... Check the Regex box and add the following regex [//#].* and click on Replace in Find Window.... Select to replace all occurrences and voila the lines are gone!
+If we open up the file `src/main/scala/com/lightbend/akka/http/sample/QuickstartServer.scala` we can see a lot of lines beginning with //# .... These lines are used as directives for this documentation. To get rid of these lines from the source code we can utilize the awesome Find/Replace functionality in IntelliJ. Select Edit -> Find -> Replace in Path.... Check the Regex box and add the following regex `[//#].*` and click on Replace in Find Window.... Select to replace all occurrences and voila the lines are gone!
 
 ## Running the application
 

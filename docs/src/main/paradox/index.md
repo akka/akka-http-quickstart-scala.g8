@@ -9,7 +9,7 @@ This Hello World example demonstrates some Akka HTTP fundamentals. Within 30 min
 
 ## Prerequisite
 
-Having a basic understanding of Akka actors will help the reader of this guide. There is a [getting started guide](https://developer.lightbend.com/guides/akka-quickstart-scala/) for Akka actors should you feel like brushing up your knowledge thereof.
+Having a basic understanding of Akka actors will help the reader of this guide. There is a [Quickstart guide](https://developer.lightbend.com/guides/akka-quickstart-scala/) for Akka actors should you feel like brushing up your knowledge thereof.
 
 ## Downloading the example
 
@@ -35,13 +35,27 @@ To run Hello World:
 
 In a console, change directories to the top level of the unzipped project.
 
-For example, if you used the default project name, `akka-http-quickstart-scala`, and extracted the project to your root directory, from the root directory, enter: cd akka-http-quickstart-scala
+For example, if you used the default project name, `akka-http-quickstart-scala`, and extracted the project to your root directory, from the root directory, enter:
 
 Enter `./sbt` on OSX/Linux or run `sbt.bat` on Windows to start [sbt](http://www.scala-sbt.org).
 
 sbt downloads project dependencies. The `>` prompt indicates sbt has started in interactive mode.
 
 At the sbt prompt, enter `run`.
+
+OSX/Linux
+: ```
+$ cd akka-http-quickstart-scala
+$ ./sbt
+> run
+```
+
+Windows
+: ```
+$ cd akka-http-quickstart-scala
+$ sbt.bat
+> run
+```
 
 sbt builds the project and runs Hello World.
 
@@ -61,24 +75,24 @@ Congratulations, you just ran your first Akka HTTP app. Now take a look at what 
 
 ## What Hello World does
 
-When Hello World starts up it creates an ActorSystem and registers so-called routes that are available in this ActorSystem. The routes are bound to a port, in this case, `localhost:8080`. Below is an overview of what things look like when the application starts:
+In this example, a simple user registry service represented by an actor is presented to consumers as a [REST service](https://en.wikipedia.org/wiki/Representational_state_transfer).
+
+When Hello World starts up, it creates an ActorSystem and an instance of the `UserRegistryActor` that implements the functionality of the service. Then the HTTP service is started by binding so-called "routes" to the given interface and port, in this case, `localhost:8080`. Below is an overview of what things look like after the application has started:
 
 ![Architecture](images/hello-akka-http.png)
 
-In this sample application, we are implementing a [REST service](https://en.wikipedia.org/wiki/Representational_state_transfer). The idea is to build a simple user registry service.
-
-The endpoints available are `/users` and `/user` with some attached HTTP directives and parameters/payloads. When invoked, endpoints will interact with an actor, "userRegistryActor", which represents the business logic of this sample application.
+The value `routes` defines the endpoint `/users` that route requests to the business logic actor. Routes are defined in terms of so-called "directives" which are basic building blocks of Akka Http that define how requests and responses are handled and how data is translated from HTTP to and from your domain objects.
 
 In the following sections, we will take a detailed look at the individual pieces of this application.
 
 ## The Akka HTTP philosophy
 
-Akka HTTP is designed specifically as "not-a-framework," not because we don’t like frameworks, but for use cases where a framework is not the right choice.  Akka HTTP is for building integration layers based on HTTP and as such tries to "stay on the sidelines."  Therefore, a typical application doesn't sit on top of Akka HTTP but instead on top of whatever makes sense and uses Akka HTTP merely for the HTTP integration needs.
+Akka HTTP is designed specifically as "not-a-framework," not because we don’t like frameworks, but for use cases where a framework is not the right choice.  Akka HTTP is for building integration layers based on HTTP and as such tries to "stay on the sidelines."  Therefore, a typical application doesn't sit on top of Akka HTTP but instead on top of whatever makes sense and uses Akka HTTP merely for the HTTP integration needs. Should you look for a web framework it is recommended to take a look at the [Play framework](https://www.playframework.com/).
 
 @@@index
 
-* [The server](server-class.md)
 * [The backend](backend.md)
+* [The server](server-class.md)
 * [JSON](json.md)
 * [Running the application](running-the-application.md)
 * [IntelliJ IDEA](intellij-idea.md)

@@ -1,79 +1,80 @@
-The main class
-----------------
+The Akka HTTP server class
+--------------------------
 
-Let's dissect the main class, `QuickstartServer`. We make this class runnable by extending `App` (we will discuss the trait `JsonSupport` later):
+Let's dissect the server class, `QuickstartServer`. We make this class runnable by extending `App` (we will discuss the trait `JsonSupport` later):
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #main-class }
 
-Now that we have a class to run we should add some Akka HTTP fundamentals with which we will build our RESTful web service:
-
-* define routes bound to endpoints and HTTP directives
-* create a server bound to an IP and port that will handle all requests
-* add error handling for when something goes wrong
-
-Let us take a look at each of these steps here below.
+Now that we have a class to run we should add some Akka HTTP fundamentals with which we will build our RESTful web service. The aim is to use routes to define endpoints by choosing what to do for which requests.
 
 ## Routes
 
 For our service we want to define the following endpoints:
 
-| Path        | Http directive  | Intent             | Returns              |
+| Path        | Http method     | Intent             | Returns              |
 |-------------|-----------------|--------------------|----------------------|
-| /user       | POST            | Create a new user  | Confirmation message |
-| /user/$ID   | GET             | Retrieve a user    | JSON payload         |
-| /user/$ID   | DELETE          | Remove a user      | Confirmation message |
+| /users      | POST            | Create a new user  | Confirmation message |
 | /users      | GET             | Retrieve all users | JSON payload         |
+| /users/$ID  | GET             | Retrieve a user    | JSON payload         |
+| /users/$ID  | DELETE          | Remove a user      | Confirmation message |
 
-Akka HTTP provides a [domain-specific language](https://en.wikipedia.org/wiki/Domain-specific_language) (DSL) to simplify the routes/endpoints definition. Each route is composed of one or more `akka.http.scaladsl.server.Directives`, e.g. `path`, `get`, `post`, `complete`, etc.
+Akka HTTP provides a [domain-specific language](https://en.wikipedia.org/wiki/Domain-specific_language) (DSL) to simplify the routes/endpoints definition. Each route is composed of one or more `akka.http.scaladsl.server.Directives`, e.g. `path`, `get`, `post`, `complete`, etc. There is also a [low-level API](http://doc.akka.io/docs/akka-http/current/scala/http/low-level-server-side-api.html) that allows to inspect requests and create responses manually.
 
-### Creating a new user
+### Creating and retrieving a user
 
-Let us take a look at the source code for the first endpoint, the `/user` URI with a `POST` directive, used to create a new user:
+Let us take a look at the source code for the first two endpoints, the `/users` path with `GET` and `POST` HTTP methods:
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #user-post }
+@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #users-get-post }
 
-The snippet above contains a couple of interesting building blocks:
+The snippet above contains a couple of interesting Akka HTTP building blocks:
 
-* `path` : matches against the incoming URI, in this case, we want to get all requests that matches `user`.
-* `post` : matches against the incoming Http directive, in this case, we are matching against `POST`.
-* `entity(as[User])` : automatically converts the incoming payload, in this case, we expect JSON, into an entity. We will look more at this functionality in the @ref:[JSON](json.md) section.
-* `complete` : used to reply back to the request. The `StatusCodes.Created` is translated to Http response code 201. We also send back information to the caller in the form of a string.    
+**Generic functionality**
 
-When this `Route` is called, we want to create a new user, and we do so by sending a message to the actor `userRegistryActor`. We will look at the implementation of this actor later.
+* `pathPrefix("users")` : the path that is used to match the incoming request against.
+* `pathEnd` : used on an inner-level to discriminate “path already fully matched” from other alternatives. Will, in this case, match on the "users" path.
+* `~`: concatenates two or more route alternatives. Routes are attempted one after another. If a route rejects a request, the next route in the chain is attempted. This continues until a route in the chain produces a response. If all route alternatives reject the request, the concatenated route rejects the route as well. In that case, route alternatives on the next higher level are attempted. If the root level route rejects the request as well, then an error response is returned that contains information about why the request was rejected.
+
+**Retrieving users**
+
+* `get` : matches against `GET` HTTP method.
+* `complete` : completes a request which means creating and returning a response from the arguments.
+
+**Creating a user**
+
+* `post` : matches against `POST` HTTP method.
+* `entity(as[User])` : converts the HTTP request body into a domain object of type User. Implicitly, we assume that the request contains application/json content. We will look at how this works in the @ref:[JSON](json.md) section.
+* `complete` : completes a request which means creating and returning a response from the arguments. Note, how the tuple (StatusCodes.Created, "...") of type (StatusCode, String) is implicitly converted to a response with the given status code and a text/plain body with the given string.
 
 ### Retrieving and removing a user
 
-Next we need to define how to retrieve and remove a user, i.e. for the case when the URI `/user/$ID` is used where `$ID` is the id of the user:
+Next we need to define how to retrieve and remove a user, i.e. for the case when the URI `/users/$ID` is used where `$ID` is the id of the user:
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #user-get-delete }
+@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #users-get-delete }
 
 This Route snippet contains a couple of interesting concepts:
 
-* `path("user" / Segment) { => user` : this bit of code matches against URIs of the exact format `/user/$ID` and the `Segment` is automatically extracted into the `user` variable so that we can get to the value passed in the URI. For example `/user/Bruce` will populate the `user` variable with the value "Bruce."
-* `get` : matches against the incoming Http directive.
+**Generic functionality**
 
-Let's break down the "business logic" in the first Route:
+* `pathPrefix("users")` : the path that is used to match the incoming request against.
+* `path(Segment) { => user` : this bit of code matches against URIs of the exact format `/users/$ID` and the `Segment` is automatically extracted into the `user` variable so that we can get to the value passed in the URI. For example `/users/Bruce` will populate the `user` variable with the value "Bruce." There is plenty of more features available for handling of URIs, see [pattern matchers](http://doc.akka.io/docs/akka-http/current/scala/http/routing-dsl/path-matchers.html#basic-pathmatchers) for more information.
+* `~`: concatenates two or more route alternatives. Routes are attempted one after another. If a route rejects a request, the next route in the chain is attempted. This continues until a route in the chain produces a response. If all route alternatives reject the request, the concatenated route rejects the route as well. In that case, route alternatives on the next higher level are attempted. If the root level route rejects the request as well, then an error response is returned that contains information about why the request was rejected.
+
+**Retrieving a user**
+
+* `get` : matches against `GET` HTTP method.
+* `complete` : completes a request which means creating and returning a response from the arguments.
+
+Let's break down the "business logic":
 
 @@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #retrieve-user-info }
 
-The code above uses the so-called [ask](http://doc.akka.io/docs/akka/current/scala/actors.html#send-messages) in Akka. This will send a message asynchronously and return a `Future` representing a _possible_ reply. The code above maps the reply to the type `UserInfo`. When the future completes, it will use the second part of the code to evaluate to either `Success`, with or without a result, or a `Failure`. Regardless of the outcome of the future, we should return something to the requester, and we do so by using the `complete` directive with an appropriate response code and value.
+The `rejectEmptyResponse` here above is a convenience method that automatically unwraps a future, handles an `Option` by converting `Some` into a successful response, returns a HTTP status code 404 for `None`, and passes on to the `ExceptionHandler` in case of an error, which returns the HTTP status code 500 by default.
 
-The remaining directives used for this route are:
+**Deleting a user**
 
-* `~` : fuses `Route`s together - this will become more apparent when you see the complete `Route` definition here below.
 * `delete` : matches against the Http directive `DELETE`.
 
-The "business logic" for when deleting a user is straight forward; send an instruction about removing a user to the user registry actor and return a status code to the client (which in this case is `StatusCodes.OK`, i.e. Http status code 200)
-
-### Retrieving all users
-
-Finally we should implement functionality to retrieve all registered users:
-
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #users-get }
-
-This code is based on the same structure as the code above, send a message to the user registry actor using an `ask` and pass on the `Future` to the `complete` method.
-
-Why do we not use an `onComplete` as we did for when retrieving a particular user? The difference is that when we use `GetUsers` there will always be something returned; an empty list means that there are no registered users. However, when we asked for a particular user ID, there might be the case that there is no such user recorded and we need a way to tell this to the client. When sent a `GetUser(name)` the user registry actor therefore send back an `Option[UserInfo]`. It could be that there is a `Some(UserInfo)` or a `None` which indicates that there was no match in the registry.
+The "business logic" for when deleting a user is straight forward; send an instruction about removing a user to the user registry actor, wait for the response and return an appropriate HTTP status code to the client.
 
 ### The complete Route
 
@@ -92,7 +93,7 @@ To set up an Akka HTTP server we must first define some implicit values that wil
 What does the above mean and why do we need it?
 
 * `ActorSystem` : the context in which actors will run. What actors, you may wonder? Akka Streams uses actors under the hood, and the actor system defined in this `val` will be picked up and used by Streams.
-* `ActorMaterializer` : also Akka Streams related - it uses the materializer to allocate all the necessary resources it needs to run.
+* `ActorMaterializer` : while the ActorSystem is the host of all thread pools and live actors, an ActorMaterializer is specific to Akka Streams and is what makes them run. The ActorMaterializer interprets stream descriptions into executable entities which are run on actors, and this is why it requires an ActorSystem to function.
 
 With that defined we can move on to instantiate the server:
 
@@ -104,7 +105,7 @@ We should also add code for stopping the server. To do so we use the `StdIn.read
 
 ## Error handling
 
-Finally, we should take a look at how to handle errors. We know, as the astute engineers we are, that errors will happen. We should prepare our program for this and error handling should not be an afterthought when we build systems.
+Finally, we should take a look at how to [handle errors](http://doc.akka.io/docs/akka-http/current/scala/http/routing-dsl/exception-handling.html). We know, as the astute engineers we are, that errors will happen. We should prepare our program for this and error handling should not be an afterthought when we build systems.
 
 In this sample, we use a very simple exception handler which catches all unexpected exceptions and responds back to the client with an `InternalServerError` (HTTP status code 500) with an error message and for what URI the exception happened. We extract the URI by using the `extractUri` directive.
 
