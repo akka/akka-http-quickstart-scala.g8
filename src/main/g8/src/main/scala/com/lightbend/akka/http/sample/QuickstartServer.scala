@@ -35,6 +35,8 @@ object QuickstartServer extends App with JsonSupport {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
+
+  // Required by the `ask` (?) method below
   implicit val timeout = Timeout(5 seconds)
 
   //#exception-handler
@@ -48,41 +50,50 @@ object QuickstartServer extends App with JsonSupport {
 
   //#all-routes
   lazy val routes: Route =
-    //#user-post
-    path("user") {
-      post {
-        entity(as[User]) { user =>
-          userRegistryActor ! CreateUser(user)
-          complete((StatusCodes.Created, s"User ${user.name} created."))
-        }
-      }
-    } ~ //#user-post
-      //#user-get-delete
-      path("user" / Segment) { name =>
-        get {
-          //#retrieve-user-info
-          val userInfo: Future[UserInfo] = (userRegistryActor ? GetUser(name)).mapTo[UserInfo]
-          onComplete(userInfo) { r =>
-            r match {
-              case Success(UserInfo(Some(user))) => complete(user)
-              case Success(UserInfo(None)) => complete((StatusCodes.OK, s"User $name is not registered."))
-              case Failure(ex) => complete((StatusCodes.InternalServerError, ex))
-            }
-          }
-          //#retrieve-user-info
-        } ~
-          delete {
-            userRegistryActor ! DeleteUser(name)
-            complete((StatusCodes.OK, s"User $name deleted."))
-          }
-      } ~ //#user-get-delete
-      //#users-get
-      path("users") {
+    //#users-get-post
+    //#users-get-delete
+    pathPrefix("users") {
+      //#users-get-delete
+      pathEnd {
         get {
           val users: Future[Users] = (userRegistryActor ? GetUsers).mapTo[Users]
           complete(users)
+        } ~
+          post {
+            entity(as[User]) { user =>
+              val userCreated: Future[ActionPerformed] = (userRegistryActor ? CreateUser(user)).mapTo[ActionPerformed]
+              onComplete(userCreated) { r =>
+                r match {
+                  case Success(ActionPerformed(description)) => complete((StatusCodes.Created, description))
+                  case Failure(ex) => complete((StatusCodes.InternalServerError, ex))
+                }
+              }
+            }
+          }
+      } ~
+        //#users-get-post
+        //#users-get-delete
+        path(Segment) { name =>
+          get {
+            //#retrieve-user-info
+            val maybeUser: Future[Option[User]] = (userRegistryActor ? GetUser(name)).mapTo[Option[User]]
+            rejectEmptyResponse {
+              complete(maybeUser)
+            }
+            //#retrieve-user-info
+          } ~
+            delete {
+              val userDeleted: Future[ActionPerformed] = (userRegistryActor ? DeleteUser(name)).mapTo[ActionPerformed]
+              onComplete(userDeleted) { r =>
+                r match {
+                  case Success(ActionPerformed(description)) => complete((StatusCodes.OK, description))
+                  case Failure(ex) => complete((StatusCodes.InternalServerError, ex))
+                }
+              }
+            }
         }
-      } //#users-get
+      //#users-get-delete
+    }
   //#all-routes
 
   //#http-server
