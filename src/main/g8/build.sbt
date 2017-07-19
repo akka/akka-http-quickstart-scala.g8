@@ -7,10 +7,14 @@ lazy val root = (project in file(".")).
       organization    := "com.example",
       scalaVersion    := "2.12.2"
     )),
-    name := "$name$",
+    name := "Akka Http Quickstart",
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
-      "com.typesafe.akka" %% "akka-stream"          % akkaVersion
+      "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
+      "com.typesafe.akka" %% "akka-http-xml"     % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-stream"       % akkaVersion,
+      "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
+      "org.scalatest"     %% "scalatest"         % "3.0.1"         % Test
     )
   )
