@@ -1,94 +1,30 @@
-Running the application
------------------------
+Final testing
+-------------
 
-You can run the Hello World application from the command line or an IDE. The final topic in this guide describes how to run it from IntelliJ IDEA. However, before we get there, let’s take a quick look at the build tool: sbt.
+When you ran the example for the first time, you were able to create and retrieve multiple users. Now that you understand how the example is implemented, let's confirm that the rest of the functionality works. We want to verify that:
 
-## The build files
+* If we try to retrieve users when none exist, we get an empty list.
+* If we try to retrieve a specific user that doesn't exist, we get an informative message.
+* We can delete users.
 
-sbt uses a build.sbt file to handle the project. This project’s build.sbt file looks like this:
+To test this functionality, follow these steps. If you need reminders on starting the app or sending requests, refer to the @ref:[instructions](index.md#exercising-the-example) in the beginning.
 
-@@snip [build.sbt]($g8root$/build.sbt)
+1. If the Akka HTTP server is still running, stop and restart it.
+2. With no users registered, use your tool of choice to:
+3. Retrieve a list of users. Hint: use the `GET` method and append `/users` to the URL.
 
-## Running the project
+You should get back an empty list: `{"users":[]}`
 
-We run the application from a console/terminal window and enter the following commands:
+4. Try to retrieve a single user named `MrX`. Hint: use the `GET` method and append `users/MrX` to the URL.
 
-OSX/Linux
-: ```
-$ cd akka-http-quickstart-scala
-$ ./sbt
-> run
-```
+You should get back the message: `User MrX is not registered.`
 
-Windows
-: ```
-$ cd akka-http-quickstart-scala
-$ sbt.bat
-> run
-```
+5. Try adding one or more users. Hint: use the `POST` method, append `/users` to the URL, and format the data in JSON, similar to: `{"name":"MrX","age":31,"countryOfResidence":"Canada"}`
 
-The output should look like this:
+You should get back the message: `User MrX created.`
 
-```
-...
-[info] Running com.lightbend.akka.http.sample.QuickstartServer
-Server online at http://localhost:8080/
-Press RETURN to stop...
-```
+6. Try deleting a user you just added. Hint: use the `DELETE`, and append `/users/<NAME>` to the URL.
 
-## Interacting with the application
+You should get back the message: `User MrX deleted.`
 
-The Akka HTTP server is now running, and we will use the [cURL](https://en.wikipedia.org/wiki/CURL) command to test the application. If you prefer to use your browser to test the service then a tool like [RESTClient](http://restclient.net/) may be good to install.
-
-Open another console/terminal window to investigate the functionality of the application.
-
-We start by looking at the existing users (there should be none as we just launched the application):
-
-```
-$ curl http://localhost:8080/users
-{"users":[]}
-```
-
-The next step is to add a couple of users:
-```
-$ curl -H "Content-type: application/json" -X POST -d '{"name": "MrX", "age": 31, "countryOfResidence": "Canada"}' http://localhost:8080/user
-User MrX created.
-
-$ curl -H "Content-type: application/json" -X POST -d '{"name": "Anonymous", "age": 55, "countryOfResidence": "Iceland"}' http://localhost:8080/user
-User Anonymous created.
-
-$ curl -H "Content-type: application/json" -X POST -d '{"name": "Bill", "age": 67, "countryOfResidence": "USA"}' http://localhost:8080/user
-User Bill created.
-```
-
-We can try to retrieve user information for various users now:
-
-```
-$ curl http://localhost:8080/user/MrX
-{"name":"MrX","age":31,"countryOfResidence":"Canada"}
-
-$ curl http://localhost:8080/user/SomeUnknownUser
-User SomeUnknownUser is not registered.
-```
-
-Now, when we inquire the system for all existing users it looks like this:
-
-```
-$ curl http://localhost:8080/users
-{"users":[{"name":"Anonymous","age":55,"countryOfResidence":"Iceland"},{"name":"MrX","age":31,"countryOfResidence":"Canada"},{"name":"Bill","age":67,"countryOfResidence":"USA"}]}
-```
-
-Next, we should make sure that the delete functionality works as expected:
-
-```
-$ curl -X DELETE http://localhost:8080/user/Bill
-User Bill deleted.
-
-$ curl http://localhost:8080/user/Bill
-User Bill is not registered.
-
-$ curl http://localhost:8080/users
-{"users":[{"name":"Anonymous","age":55,"countryOfResidence":"Iceland"},{"name":"MrX","age":31,"countryOfResidence":"Canada"}]}
-```
-
-We have now tried all the functionality available in this sample. The next step is to see how we can use an IDE to work with the application.
+Now that you've confirmed all of the example functionality, see how simple it is to integrate the project into an IDE.
