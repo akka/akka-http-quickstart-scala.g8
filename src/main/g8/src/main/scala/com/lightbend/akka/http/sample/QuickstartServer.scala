@@ -39,15 +39,6 @@ object QuickstartServer extends App with JsonSupport {
   // Required by the `ask` (?) method below
   implicit val timeout = Timeout(5 seconds)
 
-  //#exception-handler
-  implicit val exceptionHandler = ExceptionHandler {
-    case e: Exception =>
-      extractUri { uri =>
-        complete((StatusCodes.InternalServerError, s"Exception ${e.getMessage} happened for URI: $uri."))
-      }
-  }
-  //#exception-handler
-
   //#all-routes
   lazy val routes: Route =
     //#users-get-post
