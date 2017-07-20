@@ -1,15 +1,17 @@
-lazy val akkaHttpVersion = "$akka_http_version$"
-lazy val akkaVersion    = "$akka_version$"
+lazy val akkaHttpVersion = "10.0.9"
+lazy val akkaVersion    = "2.5.3"
 
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
       organization    := "com.example",
-      scalaVersion    := "$scala_version$"
+      scalaVersion    := "2.12.2"
     )),
-    name := "$name$",
+    name := "Akka Http Quickstart",
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-http"         % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
       "com.typesafe.akka" %% "akka-http-xml"     % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-stream"       % akkaVersion,
       "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
