@@ -175,7 +175,8 @@ Congratulations, you just ran and exercised your first Akka HTTP app! You got a 
 
 The example is implemented in the following three source files:
 
-* `QuickstartServer.scala` -- contains the main class and Akka HTTP `routes`.
+* `QuickstartServer.scala` -- contains the main class which sets-up and all actors, it runs the Akka HTTP `routes`.
+* `UserRoutes.scala` -- contains Akka HTTP `routes` that the Server will serve.
 * `UserRegistryActor.scala` -- implements the actor that handles registration.
 * `JsonSupport.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses.
 
@@ -183,10 +184,11 @@ First, let's dissect the backend logic.
 
 @@@index
 
-* [The backend](backend.md)
-* [The server](server-class.md)
+* [The Actor backend](backend-actor.md)
+* [The HTTP server](http-server.md)
 * [JSON](json.md)
 * [Running the application](running-the-application.md)
+* [Testing Routes](testing-routes.md)
 * [IntelliJ IDEA](intellij-idea.md)
 
 @@@
