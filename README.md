@@ -12,13 +12,14 @@ sbt -Dsbt.version=0.13.15 new https://github.com/akka/akka-http-scala-seed.g8
 This template will prompt for the following parameters. Press `Enter` if the default values suit you:
 - `name`: Becomes the name of the project.
 - `description`: Provides a description for the project.
-- `scala-version`: Specifies the Scala version for this project.
-- `akka-http-version`: Specifies which version of Akka HTTP should be used for this project.
-- `akka-version`: Specifies which version of Akka should be used for this project.
+- `scala_version`: Specifies the Scala version for this project.
+- `akka_http_version`: Specifies which version of Akka HTTP should be used for this project.
+- `akka_version`: Specifies which version of Akka should be used for this project.
+- `organization`: Specifies the organization for this project.
 
 This template comes with 2 different ways to implement an Akka HTTP server, along with their respective tests.
 
-- WebServer: This is the manual way to start a server. For this case, routes are defined in separated classes: the object `com.example.routes.BaseRoutes` 
+- WebServer: This is the manual way to start a server. For this case, routes are defined in separated classes: the object `com.example.routes.BaseRoutes`
 and the trait `com.example.routes.SimpleRoutes`.
 - WebServerHttpApp: This server is started using the recently introduced `HttpApp`, which bootstraps a server with just a few lines.
 For this particular case, the routes are defined in the same class, but you can also define them in separated traits or objects.
