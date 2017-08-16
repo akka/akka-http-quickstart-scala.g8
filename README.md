@@ -11,7 +11,6 @@ sbt -Dsbt.version=0.13.15 new https://github.com/akka/akka-http-scala-seed.g8
 
 This template will prompt for the following parameters. Press `Enter` if the default values suit you:
 - `name`: Becomes the name of the project.
-- `description`: Provides a description for the project.
 - `scala_version`: Specifies the Scala version for this project.
 - `akka_http_version`: Specifies which version of Akka HTTP should be used for this project.
 - `akka_version`: Specifies which version of Akka should be used for this project.
