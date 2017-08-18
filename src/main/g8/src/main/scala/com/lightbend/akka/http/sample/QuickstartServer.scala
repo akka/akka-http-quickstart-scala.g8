@@ -5,10 +5,8 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
-import akka.util.Timeout
 
 import scala.concurrent.{ ExecutionContext, Future }
-import scala.concurrent.duration._
 import scala.io.StdIn
 
 //#main-class
