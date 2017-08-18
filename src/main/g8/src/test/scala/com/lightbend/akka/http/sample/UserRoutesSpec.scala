@@ -2,10 +2,8 @@ package com.lightbend.akka.http.sample
 
 //#test-top
 import akka.actor.ActorRef
-import akka.http.javadsl.server.Rejections
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model._
-import akka.http.scaladsl.server.SchemeRejection
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{ Matchers, WordSpec }

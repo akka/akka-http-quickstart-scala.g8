@@ -4,21 +4,16 @@ import akka.actor.{ ActorRef, ActorSystem }
 import akka.event.Logging
 
 import scala.concurrent.duration._
-import akka.stream.ActorMaterializer
-import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.model.StatusCodes
-import akka.http.scaladsl.server.{ ExceptionHandler, Route }
+import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.delete
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.http.scaladsl.server.directives.MethodDirectives.post
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.http.scaladsl.server.directives.PathDirectives.path
 
-import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
-import scala.util.{ Failure, Success }
 import com.lightbend.akka.http.sample.UserRegistryActor._
 import akka.pattern.ask
 import akka.util.Timeout
