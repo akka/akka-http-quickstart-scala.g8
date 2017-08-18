@@ -18,9 +18,9 @@ This template will prompt for the following parameters. Press `Enter` if the def
 
 The template comes with the following sources:
 
-* `QuickstartServer.scala` -- contains the main class which sets-up and all actors, it runs the Akka HTTP `routes`.
-* `UserRoutes.scala` -- contains Akka HTTP `routes` that the Server will serve.
-* `UserRegistryActor.scala` -- implements the actor that handles registration.
+* `UserRegistryActor.scala` -- the actor which handles the registration requests.
+* `UserRoutes.scala` -- Akka HTTP `routes` defining exposed endpoints.
+* `QuickstartServer.scala` -- the main class which combines Akka HTTP `routes` with the actor to run HTTP server.
 * `JsonSupport.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses.
 
 Once inside the project folder use the following command to run the code:
