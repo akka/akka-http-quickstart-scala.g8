@@ -15,30 +15,17 @@ This template will prompt for the following parameters. Press `Enter` if the def
 - `akka_http_version`: Specifies which version of Akka HTTP should be used for this project.
 - `organization`: Specifies the organization for this project.
 
-This template comes with 2 different ways to implement an Akka HTTP server, along with their respective tests.
+The template comes with the following sources:
 
-- WebServer: This is the manual way to start a server. For this case, routes are defined in separated classes: the object `com.example.routes.BaseRoutes`
-and the trait `com.example.routes.SimpleRoutes`.
-- WebServerHttpApp: This server is started using the recently introduced `HttpApp`, which bootstraps a server with just a few lines.
-For this particular case, the routes are defined in the same class, but you can also define them in separated traits or objects.
+* `QuickstartServer.scala` -- contains the main class which sets-up and all actors, it runs the Akka HTTP `routes`.
+* `UserRoutes.scala` -- contains Akka HTTP `routes` that the Server will serve.
+* `UserRegistryActor.scala` -- implements the actor that handles registration.
+* `JsonSupport.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses.
 
-Once inside the project folder, to run this code, you can use any of the following commands:
+Once inside the project folder use the following command to run the code:
 ```
 sbt run
 ```
-This will prompt you with the 2 different servers, so you can pick the one you prefer.
-
-Alternatively, you can run:
-
-```
-sbt runMain com.example.WebServer
-```
-or
-```
-sbt runMain com.example.WebServerHttpApp
-```
-to directly run the specified file.
-
 
 Template license
 ----------------

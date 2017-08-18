@@ -173,7 +173,7 @@ The system should respond with a list of users in JSON format.
 
 Congratulations, you just ran and exercised your first Akka HTTP app! You got a preview of how routes make it easy to communicate over HTTP.
 
-The example is implemented in the following three source files:
+The example is implemented in the following four source files:
 
 * `QuickstartServer.scala` -- contains the main class which sets-up and all actors, it runs the Akka HTTP `routes`.
 * `UserRoutes.scala` -- contains Akka HTTP `routes` that the Server will serve.
