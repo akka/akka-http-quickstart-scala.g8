@@ -13,6 +13,7 @@ This template will prompt for the following parameters. Press `Enter` if the def
 - `name`: Becomes the name of the project.
 - `scala_version`: Specifies the Scala version for this project.
 - `akka_http_version`: Specifies which version of Akka HTTP should be used for this project.
+- `akka_version`: Specifies which version of Akka should be used for this project.
 - `organization`: Specifies the organization for this project.
 
 The template comes with the following sources:
