@@ -5,15 +5,12 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
-import akka.util.Timeout
 
 import scala.concurrent.{ ExecutionContext, Future }
-import scala.concurrent.duration._
 import scala.io.StdIn
 
 //#main-class
-object QuickstartServer extends App
-    with UserRoutes {
+object QuickstartServer extends App with UserRoutes {
 
   // set up ActorSystem and other dependencies here
   //#main-class
@@ -28,14 +25,17 @@ object QuickstartServer extends App
   val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
 
   //#main-class
-  lazy val routes: Route =
-    userRoutes // from the UserRoutes trait
+  // from the UserRoutes trait
+  lazy val routes: Route = userRoutes
   //#main-class
 
   //#http-server
   val serverBindingFuture: Future[ServerBinding] = Http().bindAndHandle(routes, "localhost", 8080)
+
   println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+
   StdIn.readLine()
+
   serverBindingFuture
     .flatMap(_.unbind())
     .onComplete { done =>

@@ -22,7 +22,7 @@ class UserRegistryActor extends Actor with ActorLogging {
 
   var users = Set.empty[User]
 
-  def receive = {
+  def receive: Receive = {
     case GetUsers =>
       sender() ! Users(users.toSeq)
     case CreateUser(user) =>
