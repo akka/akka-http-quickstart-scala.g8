@@ -18,3 +18,11 @@ lazy val root = (project in file(".")).
       "org.scalatest"     %% "scalatest"         % "3.0.1"         % Test
     )
   )
+
+mainClass in Compile := Some("example.QuickstartServer")
+
+dockerBaseImage := "openjdk:8-jre-alpine"
+
+enablePlugins(JavaAppPackaging)
+enablePlugins(DockerPlugin)
+enablePlugins(AshScriptPlugin)

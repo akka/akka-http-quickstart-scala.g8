@@ -36,8 +36,7 @@ trait UserRoutes extends JsonSupport {
                   complete((StatusCodes.Created, performed))
                 }
               }
-            }
-          )
+            })
         },
         //#users-get-post
         //#users-get-delete
@@ -61,10 +60,8 @@ trait UserRoutes extends JsonSupport {
                 complete((StatusCodes.OK, performed))
               }
               //#users-delete-logic
-            }
-          )
-        }
-      )
+            })
+        })
       //#users-get-delete
     }
   //#all-routes
