@@ -1,14 +1,3 @@
-package com.lightbend.akka.http.sample
-
-import akka.actor.{ ActorRef, ActorSystem }
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.Http.ServerBinding
-import akka.http.scaladsl.server.Route
-import akka.stream.ActorMaterializer
-
-import scala.concurrent.{ ExecutionContext, Future }
-import scala.io.StdIn
-
 //#main-class
 object QuickstartServer extends App with UserRoutes {
 
@@ -40,9 +29,8 @@ object QuickstartServer extends App with UserRoutes {
     .flatMap(_.unbind())
     .onComplete { done =>
       done.failed.map { ex => log.error(ex, "Failed unbinding") }
-      system.terminate() 
+      system.terminate()
     }
   //#http-server
   //#main-class
 }
-//#main-class
