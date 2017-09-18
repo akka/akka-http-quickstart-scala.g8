@@ -74,7 +74,7 @@ our disposal when writing the test.
 This concludes the basics of unit testing HTTP routes, to learn more please refer to the 
 [Akka HTTP TestKit documentation]().
 
-### Complete unit unit test code listing
+### Complete unit test code listing
 
 For reference, here's the entire unit test code:
 
