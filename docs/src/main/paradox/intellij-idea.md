@@ -11,7 +11,7 @@ To add the Akka HTTP example project to IntelliJ, follow these steps:
 1. Select **Open** from the Welcome dialog or **File &gt; Open** from the Editor.
 1. Browse to select the top-level directory of the sample project and click **OK**.
 
-IntelliJ opens the project.
+![Open Project](images/idea-open-project.png)
 
 ## Removing comments
 
