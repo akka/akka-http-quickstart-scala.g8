@@ -36,5 +36,5 @@ We won't go into how the formatters are implemented - this is done for us by the
   
 @@@ 
 
-Now that we've examined the example app thoroughly, let's test a few the remaining use cases.
+Now that we've examined the example app thoroughly, let's test a few remaining use cases.
 
