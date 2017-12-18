@@ -1,4 +1,12 @@
-A [Giter8][g8] template for Akka HTTP in Scala
+## Akka HTTP quickstart in Scala
+
+Please see the [quickstart guide](https://developer.lightbend.com/guides/akka-http-quickstart-scala/) for a
+walk through the code.
+
+You can use [Giter8][g8] to create your own project from the quickstart. Alternatively, you can download
+a packaged version of this project by clicking "Create a project for me!" on the
+[Lightbend Getting Started](https://developer.lightbend.com/start/?group=akka&project=akka-http-quickstart-scala)
+page.
 
 Prerequisites:
 - JDK 8
@@ -6,7 +14,7 @@ Prerequisites:
 
 Open a console and run the following command to apply this template:
  ```
-sbt -Dsbt.version=0.13.15 new https://github.com/akka/akka-http-scala-seed.g8
+sbt -Dsbt.version=0.13.15 new https://github.com/akka/akka-http-quickstart-scala.g8
  ```
 
 This template will prompt for the following parameters. Press `Enter` if the default values suit you:
