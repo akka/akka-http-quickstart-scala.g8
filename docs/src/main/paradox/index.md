@@ -50,7 +50,7 @@ Start sbt:
 
 When you run sbt, it downloads project dependencies. The `>` prompt indicates that sbt is running in interactive mode.
 
-At the sbt prompt, enter `run`.
+At the sbt prompt, enter `reStart`.
 
 sbt builds the project, starts an Akka HTTP server, and runs the example application.
 
@@ -61,10 +61,12 @@ The output should look something like this:
 ...
 [info] Running com.lightbend.akka.http.sample.QuickstartServer
 Server online at http://localhost:8080/
-Press RETURN to stop...
 ```
 
 The Akka HTTP server is now running, and you can test it by sending simple HTTP requests.
+
+You can restart it by entering `reStart` again, and stop it with `reStop`.
+To restart your application each time a change is detected, run `~reStart`.
 
 ## Example app overview
 
