@@ -128,8 +128,6 @@ Further down in `QuickstartServer.scala`, you will find the code to instantiate 
 
 The `bindAndhandle` method only takes three parameters; `routes`, the hostname, and the port. That's it! When this program runs--as you've seen--it starts an Akka HTTP server on localhost port 8080. Note that startup happens asynchronously and therefore the `bindAndHandle` method returns a `Future`.
 
-The code for stopping the server includes the `StdIn.readLine()` method that will wait until RETURN is pressed on the keyboard. When that happens, `flatMap` uses the `Future` returned when we started the server to get to the `unbind()` method. Unbinding is also an asynchronous function. When the `Future` returned by `unbind()` completes, the example code makes sure that the actor system is properly terminated.
-
 ## The complete server code
 
 Here is the complete server code used in the sample:
