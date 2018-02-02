@@ -1,0 +1,6 @@
+> set scalafmtShowDiff := true
+> scalafmt::test
+> test:scalafmt::test
+# Messes up the aligned %'s
+#> sbt:scalafmt::test
+> test
