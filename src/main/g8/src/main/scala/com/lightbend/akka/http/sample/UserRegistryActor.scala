@@ -1,6 +1,6 @@
 package com.lightbend.akka.http.sample
 
-import akka.actor.{ Actor, ActorLogging, Props }
+import akka.actor.{Actor, ActorLogging, Props}
 
 //#user-case-classes
 final case class User(name: String, age: Int, countryOfResidence: String)
@@ -31,7 +31,9 @@ class UserRegistryActor extends Actor with ActorLogging {
     case GetUser(name) =>
       sender() ! users.find(_.name == name)
     case DeleteUser(name) =>
-      users.find(_.name == name) foreach { user => users -= user }
+      users.find(_.name == name) foreach { user =>
+        users -= user
+      }
       sender() ! ActionPerformed(s"User \${name} deleted.")
   }
 }
