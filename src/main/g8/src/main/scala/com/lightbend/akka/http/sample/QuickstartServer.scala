@@ -1,8 +1,5 @@
 package com.lightbend.akka.http.sample
 
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
@@ -29,8 +26,6 @@ object QuickstartServer extends App with UserRoutes {
   Http().bindAndHandle(routes, "localhost", 8080)
 
   println(s"Server online at http://localhost:8080/")
-
-  Await.result(system.whenTerminated, Duration.Inf)
   //#http-server
   //#main-class
 }
