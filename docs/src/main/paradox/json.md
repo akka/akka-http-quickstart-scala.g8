@@ -3,11 +3,11 @@ JSON marshalling
 
 When exercising the app, you interacted with JSON payloads. How does the example app convert data between JSON format and data that can be used by Scala classes? The answer begins in the server class definition `JsonSupport` trait:
 
-@@snip [UserRoutes.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRoutes.scala) { #user-routes-class }
+@@snip [UserRoutes.scala]($g8src$/scala/$package$/UserRoutes.scala) { #user-routes-class }
 
 This trait is implemented in the `JsonSupport.scala` source file:
 
-@@snip [JsonSupport.scala]($g8src$/scala/com/lightbend/akka/http/sample/JsonSupport.scala)
+@@snip [JsonSupport.scala]($g8src$/scala/$package$/JsonSupport.scala) { #json-support }
 
 We're using the [Spray JSON](https://github.com/spray/spray-json) library here, which allows us to define json marshallers
 (or `formats` how Spray JSON calls them) in a type-safe way. In other words, if we don't provide a format instance for 
@@ -19,7 +19,7 @@ To handle the two different payloads, the trait defines two implicit values; `us
 
 The `jsonFormatX` methods come from Spray JSON. The `X` represents the number of parameters in the underlying case classes:
 
-@@snip [UserRegistryActor.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRegistryActor.scala) { #user-case-classes }
+@@snip [UserRegistryActor.scala]($g8src$/scala/$package$/UserRegistryActor.scala) { #user-case-classes }
 
 We won't go into how the formatters are implemented - this is done for us by the library. All you need to remember for now is to define the formatters as implicit and that the formatter used should map the number of parameters belonging to the case class it converts.
 

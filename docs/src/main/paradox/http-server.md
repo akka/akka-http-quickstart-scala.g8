@@ -5,7 +5,7 @@ The main class, `QuickstartServer`, is runnable because it extends `App`, as sho
 This class is intended to "bring it all together", it is the main class that will run the application, as well 
 as the class that should bootstrap all actors and other dependencies (database connections etc). 
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #main-class }
+@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #main-class }
 
 Notice that we've separated out the `UserRoutes` trait, in which we'll put all our actual route definitions.
 This is a good pattern to follow, especially once your application starts to grow and you'll need some form of 
@@ -35,7 +35,7 @@ Let's look at the pieces of the example `Route` that bind the endpoints, HTTP me
 
 The definition of the endpoint to retrieve and create users look like the following:
 
-@@snip [UserRoutes.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRoutes.scala) { #users-get-post }
+@@snip [UserRoutes.scala]($g8src$/scala/$package$/UserRoutes.scala) { #users-get-post }
 
 A Route is constructed by nesting various *directives* which route an incoming request to the apropriate handler block.
 Note the following building blocks from the snippet:
@@ -68,7 +68,7 @@ The following directives are used in the above example:
 
 Next, the example defines how to retrieve and remove a user. In this case, the URI must include the user's id in the form: `/users/$ID`. See if you can identify the code that handles that in the following snippet. This part of the route includes logic for both the GET and the DELETE methods.
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRoutes.scala) { #users-get-delete }
+@@snip [QuickstartServer.scala]($g8src$/scala/$package$/UserRoutes.scala) { #users-get-delete }
 
 This part of the `Route` contains the following:
 
@@ -87,7 +87,7 @@ The following directives are used in the above example:
 
 Let's break down the logic handling the incoming request:
 
-@@snip [UserRoutes.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRoutes.scala) { #retrieve-user-info }
+@@snip [UserRoutes.scala]($g8src$/scala/$package$/UserRoutes.scala) { #retrieve-user-info }
 
 The `rejectEmptyResponse` here above is a convenience method that automatically unwraps a future, handles an `Option` by converting `Some` into a successful response, returns a HTTP status code 404 for `None`, and passes on to the `ExceptionHandler` in case of an error, which returns the HTTP status code 500 by default.
 
@@ -97,7 +97,7 @@ The `rejectEmptyResponse` here above is a convenience method that automatically 
 
 The logic for handling delete requests is as follows:
 
-@@snip [UserRoutes.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRoutes.scala) { #users-delete-logic }
+@@snip [UserRoutes.scala]($g8src$/scala/$package$/UserRoutes.scala) { #users-delete-logic }
 
 So we send an instruction about removing a user to the user registry actor, wait for the response and return an appropriate HTTP status code to the client.
 
@@ -106,7 +106,7 @@ So we send an instruction about removing a user to the user registry actor, wait
 
 Below is the complete `Route` definition from the sample application:
 
-@@snip [UserRoutes.scala]($g8src$/scala/com/lightbend/akka/http/sample/UserRoutes.scala) { #all-routes }
+@@snip [UserRoutes.scala]($g8src$/scala/$package$/UserRoutes.scala) { #all-routes }
 
 Note that one might want to separate those routes into smaller route values and `concat` them together into the `userRoutes`
 value - in a similar fashion like we do in the `QuickstartServer` leading to a bit less "dense" code.
@@ -115,7 +115,7 @@ value - in a similar fashion like we do in the `QuickstartServer` leading to a b
 
 At the beginning of the `main` class, the example defines some implicit values that will be used by the Akka HTTP server:
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #server-bootstrapping }
+@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #server-bootstrapping }
 
 Akka Streams uses these values:
 
@@ -124,7 +124,7 @@ Akka Streams uses these values:
 
 Further down in `QuickstartServer.scala`, you will find the code to instantiate the server:
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala) { #http-server }
+@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #http-server }
 
 The `bindAndhandle` method only takes three parameters; `routes`, the hostname, and the port. That's it! When this program runs--as you've seen--it starts an Akka HTTP server on localhost port 8080. Note that startup happens asynchronously and therefore the `bindAndHandle` method returns a `Future`.
 
@@ -132,6 +132,6 @@ The `bindAndhandle` method only takes three parameters; `routes`, the hostname, 
 
 Here is the complete server code used in the sample:
 
-@@snip [QuickstartServer.scala]($g8src$/scala/com/lightbend/akka/http/sample/QuickstartServer.scala)
+@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #quick-start-server }
 
 Let's move on to the actor that handles registration.

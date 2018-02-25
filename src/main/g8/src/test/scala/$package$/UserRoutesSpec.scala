@@ -1,5 +1,6 @@
 package $package$
 
+//#user-routes-spec
 //#test-top
 import akka.actor.ActorRef
 import akka.http.scaladsl.marshalling.Marshal
@@ -82,3 +83,4 @@ class UserRoutesSpec extends WordSpec with Matchers with ScalaFutures with Scala
   //#set-up
 }
 //#set-up
+//#user-routes-spec
