@@ -1,4 +1,4 @@
-package com.lightbend.akka.http.sample
+package $package$
 
 //#test-top
 import akka.actor.ActorRef

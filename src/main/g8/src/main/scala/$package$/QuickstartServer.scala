@@ -1,4 +1,4 @@
-package com.lightbend.akka.http.sample
+package $package$
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration

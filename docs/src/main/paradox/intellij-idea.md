@@ -19,7 +19,7 @@ The main source file contains comments with special directives used by the docum
 
 1. From the Project pane, open the `QuickstartServer` source file.
 1. From the **Edit** menu, select **Find &gt; Replace**.
-1. In the find box, enter `[//#].*`.
+1. Enter (//#).* into the find box.
 1. Check **Regex**.
 1. Click **Replace**.
 
