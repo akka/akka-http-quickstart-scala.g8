@@ -1,8 +1,8 @@
 package $package$
 
+//#user-registry-actor
 import akka.actor.{ Actor, ActorLogging, Props }
 
-//#user-registry-actor
 //#user-case-classes
 final case class User(name: String, age: Int, countryOfResidence: String)
 final case class Users(users: Seq[User])
