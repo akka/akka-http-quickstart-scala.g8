@@ -59,7 +59,7 @@ The output should look something like this:
 ```
 [info] Loading global plugins from /Users/x/.sbt/0.13/plugins
 ...
-[info] Running com.lightbend.akka.http.sample.QuickstartServer
+[info] Running com.example.QuickstartServer
 Server online at http://localhost:8080/
 ```
 

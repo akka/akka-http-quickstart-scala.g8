@@ -1,5 +1,6 @@
-package com.lightbend.akka.http.sample
+package $package$
 
+//#user-registry-actor
 import akka.actor.{ Actor, ActorLogging, Props }
 
 //#user-case-classes
@@ -35,3 +36,4 @@ class UserRegistryActor extends Actor with ActorLogging {
       sender() ! ActionPerformed(s"User \${name} deleted.")
   }
 }
+//#user-registry-actor

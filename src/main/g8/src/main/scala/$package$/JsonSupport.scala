@@ -1,7 +1,9 @@
-package com.lightbend.akka.http.sample
+package $package$
 
+import $package$.UserRegistryActor.ActionPerformed
+
+//#json-support
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import com.lightbend.akka.http.sample.UserRegistryActor.ActionPerformed
 import spray.json.DefaultJsonProtocol
 
 trait JsonSupport extends SprayJsonSupport {
@@ -13,3 +15,4 @@ trait JsonSupport extends SprayJsonSupport {
 
   implicit val actionPerformedJsonFormat = jsonFormat1(ActionPerformed)
 }
+//#json-support

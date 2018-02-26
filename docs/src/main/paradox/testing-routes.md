@@ -23,7 +23,7 @@ an application using Akka.
 
 First we'll need to extend a number of base traits:
 
-@@snip [QuickstartServer.scala]($g8srctest$/scala/com/lightbend/akka/http/sample/UserRoutesSpec.scala) { #test-top }
+@@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #test-top }
 
 Here we're using ScalaTest which provides the testing *style* `WordSpec` and the `Matchers` trait which provides
 the `something should === (somethingElse)` syntax [and more](http://www.scalatest.org/user_guide/using_matchers). 
@@ -43,14 +43,14 @@ Next we'll need to bring into the test class our routes that we want to test. We
 We'll need to provide it with an `ActorSystem`, which is done by the fact that the `ScalatestRouteTest` trait 
 already provides a field called `system: ActorSystem`. Next we need to implement the `userRegistryActor: ActorRef` that the routes are interacting with we'll create a TestProbe instead - which will allow us to verify the route indeed did send a message do the Actor or not etc. 
 
-@@snip [QuickstartServer.scala]($g8srctest$/scala/com/lightbend/akka/http/sample/UserRoutesSpec.scala) { #set-up }
+@@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #set-up }
 
 We could create an actor that replies with a mocked response here instead if we wanted to, this is especially useful if
 the route awaits an response from the actor before rendering the `HttpResponse` to the client. Read about the [Akka TestKit ](http://doc.akka.io/docs/akka/current/scala/testing.html) and it's utilities like `TestProbe` if this is something you'd like to learn more about. 
 
 Let's write our first test, in which we'll hit the `/users` endpoint with a `GET` request:
 
-@@snip [QuickstartServer.scala]($g8srctest$/scala/com/lightbend/akka/http/sample/UserRoutesSpec.scala) { #actual-test }
+@@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #actual-test }
 
 We simply construct a raw `HttpRequest` object and pass it into the route using the `~>` testing operator provided by `ScalatestRouteTest`. Next we do the same and pipe the result of that route into a check block, so the full syntax is: 
 `request ~> route ~> check { }`. This syntax allows us to not worry about the asynchronous nature of the request handling.
@@ -63,7 +63,7 @@ is using the same marshalling infrastructure as our routes, so if the response w
 
 In the next test we'd like test a `POST` endpoint, so we need to send an entity to the endpoint in order to create a new `User`. This time, instead of using the raw `HttpRequest` to build the request we'll use a small DSL provided by the Akka HTTP. The DSL allows you to write `Post("/hello)` instead of having to declare the full thing in the raw API (which would have been: `HttpRequest(method = HttpMethods.POST, uri = "/hello")`), and next we'll add the User JSON into the request body: 
 
-@@snip [QuickstartServer.scala]($g8srctest$/scala/com/lightbend/akka/http/sample/UserRoutesSpec.scala) { #testing-post }
+@@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #testing-post }
 
 So in order to add the entity we've used the `Marshal(object).to[TargetType]` syntax, which uses the same marshalling
 infrastructure that is used when we `complete(object)`. Since we extend the `UserRoutes` trait in this test, all the 
@@ -78,7 +78,7 @@ This concludes the basics of unit testing HTTP routes, to learn more please refe
 
 For reference, here's the entire unit test code:
 
-@@snip [QuickstartServer.scala]($g8srctest$/scala/com/lightbend/akka/http/sample/UserRoutesSpec.scala)
+@@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #user-routes-spec }
 
 
 ## A note Integration testing routes

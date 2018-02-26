@@ -1,5 +1,6 @@
-package com.lightbend.akka.http.sample
+package $package$
 
+//#quick-start-server
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
@@ -35,3 +36,4 @@ object QuickstartServer extends App with UserRoutes {
   //#main-class
 }
 //#main-class
+//#quick-start-server
