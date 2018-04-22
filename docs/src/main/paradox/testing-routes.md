@@ -57,7 +57,7 @@ We simply construct a raw `HttpRequest` object and pass it into the route using 
 After all, the route is a function of `HttpRequest => Future[HttpResponse]` - here we don't need to explicitly write code
 that's awaiting on the response, it's handled for us.
 
-Inside the check block we can inspect all kinds of attributes of the received response, like `status`, `contentType` and 
+Inside the check block we can inspect [all kinds of attributes](https://doc.akka.io/docs/akka-http/current/routing-dsl/testkit.html?language=scala#table-of-inspectors) of the received response, like `status`, `contentType` and 
 of course the full response which we can easily convert to a string for testing using `responseAs[String]`. This infrastructure
 is using the same marshalling infrastructure as our routes, so if the response was a `User` JSON, we could say `responseAs[User]` and write our assertions on the actual object.
 
