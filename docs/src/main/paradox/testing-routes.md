@@ -46,7 +46,7 @@ already provides a field called `system: ActorSystem`. Next we need to implement
 @@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #set-up }
 
 We could create an actor that replies with a mocked response here instead if we wanted to, this is especially useful if
-the route awaits an response from the actor before rendering the `HttpResponse` to the client. Read about the [Akka TestKit ](http://doc.akka.io/docs/akka/current/scala/testing.html) and it's utilities like `TestProbe` if this is something you'd like to learn more about. 
+the route awaits an response from the actor before rendering the `HttpResponse` to the client. Read about the @extref[Akka TestKit](akka.scala:testing.html) and it's utilities like `TestProbe` if this is something you'd like to learn more about. 
 
 Let's write our first test, in which we'll hit the `/users` endpoint with a `GET` request:
 
@@ -57,7 +57,7 @@ We simply construct a raw `HttpRequest` object and pass it into the route using 
 After all, the route is a function of `HttpRequest => Future[HttpResponse]` - here we don't need to explicitly write code
 that's awaiting on the response, it's handled for us.
 
-Inside the check block we can inspect [all kinds of attributes](https://doc.akka.io/docs/akka-http/current/routing-dsl/testkit.html?language=scala#table-of-inspectors) of the received response, like `status`, `contentType` and 
+Inside the check block we can inspect @extref[all kinds of attributes](akka.http.scala:routing-dsl/testkit.html#table-of-inspectors) of the received response, like `status`, `contentType` and 
 of course the full response which we can easily convert to a string for testing using `responseAs[String]`. This infrastructure
 is using the same marshalling infrastructure as our routes, so if the response was a `User` JSON, we could say `responseAs[User]` and write our assertions on the actual object.
 

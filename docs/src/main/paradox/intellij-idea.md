@@ -33,4 +33,4 @@ In the **Project** pane, right click the `QuickstartServer` source file. Select 
 
 ## Tutorial done!
 
-Congratulations! You can start building real-world applications that use Akka HTTP. Of course, we didn't have time to cover all Akka HTTP features in this short guide. See the [documentation](http://doc.akka.io/docs/akka-http/current/scala/http/index.html) to learn more.
+Congratulations! You can start building real-world applications that use Akka HTTP. Of course, we didn't have time to cover all Akka HTTP features in this short guide. See the @extref[documentation](akka.http.scala:scala/http/index.html) to learn more.

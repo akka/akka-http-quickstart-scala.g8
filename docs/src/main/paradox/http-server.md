@@ -14,7 +14,7 @@ compartmentalizing them into groups of routes handling specific parts of the exp
 
 ## Binding endpoints
 
-Each Akka HTTP `Route` contains one or more `akka.http.scaladsl.server.Directives`, such as: `path`, `get`, `post`, `complete`, etc. There is also a [low-level API](http://doc.akka.io/docs/akka-http/current/scala/http/low-level-server-side-api.html) that allows to inspect requests and create responses manually. For the user registry service, the example needs to support the actions listed below. For each, we can identify a path, the HTTP method, and return value:
+Each Akka HTTP `Route` contains one or more `akka.http.scaladsl.server.Directives`, such as: `path`, `get`, `post`, `complete`, etc. There is also a @extref[low-level API](akka.http.scala:scala/http/low-level-server-side-api.html) that allows to inspect requests and create responses manually. For the user registry service, the example needs to support the actions listed below. For each, we can identify a path, the HTTP method, and return value:
 
 | Functionality      | HTTP Method | Path       | Returns              |
 |--------------------|-------------|------------|----------------------|
@@ -78,7 +78,7 @@ The following directives are used in the above example:
 
 * `pathPrefix("users")` : the path that is used to match the incoming request against.
 * `concat`: concatenates two or more route alternatives. Routes are attempted one after another. If a route rejects a request, the next route in the chain is attempted. This continues until a route in the chain produces a response. 
-* `path(Segment) { => user` : this bit of code matches against URIs of the exact format `/users/$ID` and the `Segment` is automatically extracted into the `user` variable so that we can get to the value passed in the URI. For example `/users/Bruce` will populate the `user` variable with the value "Bruce." There is plenty of more features available for handling of URIs, see [pattern matchers](http://doc.akka.io/docs/akka-http/current/scala/http/routing-dsl/path-matchers.html#basic-pathmatchers) for more information.
+* `path(Segment) { => user` : this bit of code matches against URIs of the exact format `/users/$ID` and the `Segment` is automatically extracted into the `user` variable so that we can get to the value passed in the URI. For example `/users/Bruce` will populate the `user` variable with the value "Bruce." There is plenty of more features available for handling of URIs, see @extref[pattern matchers](akka.http.scala:scala/http/routing-dsl/path-matchers.html#basic-pathmatchers) for more information.
 
 **Retrieving a user**
 
