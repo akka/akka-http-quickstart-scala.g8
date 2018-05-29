@@ -1,6 +1,7 @@
 lazy val akkaHttpVersion = "$akka_http_version$"
 lazy val akkaVersion    = "$akka_version$"
 
+dockerBaseImage := "openjdk:jre-alpine"
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -19,4 +20,9 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka" %% "akka-stream-testkit"  % akkaVersion     % Test,
       "org.scalatest"     %% "scalatest"            % "3.0.1"         % Test
     )
-  )
+  ).
+  enablePlugins(JavaAppPackaging).
+  enablePlugins(DockerPlugin).
+  enablePlugins(AshScriptPlugin)
+
+mainClass in Compile := Some("$package$.QuickstartServer")
