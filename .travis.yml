@@ -1,7 +1,7 @@
 language: scala
 scala:
   - 2.11.12
-  - 2.12.5
+  - 2.12.6
 
 # These directories are cached to S3 at the end of the build
 cache:
