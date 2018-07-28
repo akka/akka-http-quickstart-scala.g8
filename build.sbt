@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).
     test in Test := {
       val _ = (g8Test in Test).toTask("").value
     },
-    scriptedLaunchOpts ++= List("-Xms1024m", "-Xmx1024m", "-XX:ReservedCodeCacheSize=128m", "-XX:MaxPermSize=256m", "-Xss2m", "-Dfile.encoding=UTF-8"),
+    scriptedLaunchOpts ++= List("-Xms1024m", "-Xmx1024m", "-XX:ReservedCodeCacheSize=128m", "-XX:MaxMetaspaceSize=256m", "-Xss2m", "-Dfile.encoding=UTF-8"),
     resolvers += Resolver.typesafeIvyRepo("releases")
   )
 
