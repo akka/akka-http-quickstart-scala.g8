@@ -21,9 +21,17 @@ object QuickstartServer extends App with UserRoutes {
 
   val userRegistryActor: ActorRef = system.actorOf(UserRegistryActor.props, "userRegistryActor")
 
+  val routeException = ExceptionHandler {
+    case _: Exception =>
+      println(s"Request error")
+      complete(HttpResponse(InternalServerError, entity = "Bad numbers, bad result!"))
+  }
+
   //#main-class
   // from the UserRoutes trait
-  lazy val routes: Route = userRoutes
+  lazy val routes: Route = handleExceptions(routeException) {
+    userRoutes
+  }
   //#main-class
 
   //#http-server
