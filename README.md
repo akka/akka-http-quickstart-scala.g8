@@ -14,7 +14,7 @@ Prerequisites:
 
 Open a console and run the following command to apply this template:
  ```
-sbt -Dsbt.version=0.13.15 new https://github.com/akka/akka-http-quickstart-scala.g8
+sbt -Dsbt.version=0.13.15 new akka/akka-http-quickstart-scala.g8
  ```
 
 This template will prompt for the following parameters. Press `Enter` if the default values suit you:
