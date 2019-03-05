@@ -78,7 +78,7 @@ The following directives are used in the above example:
 
 * `pathPrefix("users")` : the path that is used to match the incoming request against.
 * `concat`: concatenates two or more route alternatives. Routes are attempted one after another. If a route rejects a request, the next route in the chain is attempted. This continues until a route in the chain produces a response. 
-* `path(Segment) { => user` : this bit of code matches against URIs of the exact format `/users/$ID` and the `Segment` is automatically extracted into the `user` variable so that we can get to the value passed in the URI. For example `/users/Bruce` will populate the `user` variable with the value "Bruce." There is plenty of more features available for handling of URIs, see @extref[pattern matchers](akka.http:scala/http/routing-dsl/path-matchers.html#basic-pathmatchers) for more information.
+* `path(Segment) { user =>` : this bit of code matches against URIs of the exact format `/users/$ID` and the `Segment` is automatically extracted into the `user` variable so that we can get to the value passed in the URI. For example `/users/Bruce` will populate the `user` variable with the value "Bruce." There is plenty of more features available for handling of URIs, see @extref[pattern matchers](akka.http:scala/http/routing-dsl/path-matchers.html#basic-pathmatchers) for more information.
 
 **Retrieving a user**
 
