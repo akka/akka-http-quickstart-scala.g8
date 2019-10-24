@@ -8,8 +8,8 @@ In fact, if your logic is stateless and very simple request/reply style, you may
 
 However, the focus of this tutorial is on how to interact with an Actor backend from within Akka HTTP -- not on the actor itself, so we'll keep it very simple.
  
-The sample code in the `UserRegistryActor` is very simple. It keeps registered users in a `Set`. Once it receives messages it matches them to the defined cases to determine which action to take:
+The sample code in the `UserRegistry` is very simple. It keeps registered users in a `Set`. Once it receives messages it matches them to the defined cases to determine which action to take:
 
-@@snip [UserRegistryActor.scala]($g8src$/scala/$package$/UserRegistryActor.scala) { #user-registry-actor }
+@@snip [UserRegistry.scala]($g8src$/scala/$package$/UserRegistry.scala) { #user-registry-actor }
 
 If you feel you need to brush up on your Akka Actor knowledge, the @extref[Getting Started Guide](akka:guide/index.html) reviews actor concepts in the context of a simple Internet of Things (IoT) example.

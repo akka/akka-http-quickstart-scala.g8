@@ -1,8 +1,8 @@
 Testing routes
 --------------
 
-If you remember when we started out with our `QuickstartServer`, we decided to put the routes themselves into a separate 
-trait. Back there we said that we're doing this to eparate the infrastructure code (setting up the actor system and 
+If you remember when we started out with our `QuickstartApp`, we decided to put the routes themselves into a separate 
+class. Back there we said that we're doing this to separate the infrastructure code (setting up the actor system and 
 wiring up all the dependencies and actors), from the routes, which should only declare what they need to work with,
 and can therefore be a bit more focused on their task at hand. This of course leads us to better testability.
 
@@ -38,10 +38,12 @@ If you're using Specs2 instead, you can simply extend the `Specs2RouteTest` supp
 @@@ 
 
 
-Next we'll need to bring into the test class our routes that we want to test. We're doing this by extending the `UserRoutes` trait in the spec itself - this allows us to bring all marshallers into scope for the tests to use, as well as makes it possible to implement all abstract members of that trait in the test itself - all in in a fully type-safe way.
+Next we'll need to bring into the test class our routes that we want to test. We're doing this by creating an instance of the `UserRoutes` and importing the marshallers from `JsonFormats` into scope for the tests to use, as well as makes it possible to implement all abstract members of that trait in the test itself - all in in a fully type-safe way.
 
-We'll need to provide it with an `ActorSystem`, which is done by the fact that the `ScalatestRouteTest` trait 
-already provides a field called `system: ActorSystem`. Next we need to implement the `userRegistryActor: ActorRef` that the routes are interacting with we'll create a TestProbe instead - which will allow us to verify the route indeed did send a message do the Actor or not etc. 
+We'll want to use the Akka `ActorTestKit` however the `ScalaRouteTest` only knows of the "classic" `ActorSystem` so we need 
+to provide a small adapter allowing us to combine both. 
+
+Next we need to have a `ActorRef[UserRegistry.Command]` available that that our routes will interact with. We are using the actual actor since it does not have any dependencies, this makes the test more like an integration test than a unit test. For a more isolated test a `TestProbe` from the Akka Testkit could be used - it would allow us to verify the route indeed did send a message do the Actor or not and send specific responses back in each test case. 
 
 @@snip [QuickstartServer.scala]($g8srctest$/scala/$package$/UserRoutesSpec.scala) { #set-up }
 

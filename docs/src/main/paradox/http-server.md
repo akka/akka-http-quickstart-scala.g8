@@ -1,16 +1,15 @@
-HTTP Server logic
+HTTP Server Logic
 -----------------
 
-The main class, `QuickstartServer`, is runnable because it extends `App`, as shown in the following snippet. 
-This class is intended to "bring it all together", it is the main class that will run the application, as well 
-as the class that should bootstrap all actors and other dependencies (database connections etc). 
+The main class, `QuickstartServer`, is runnable because it has a `main` method, as shown in the following snippet. 
+This class is intended to "bring it all together", it is the main class that will start the `ActorSystem` with the root
+behavior which bootstraps all actors and other dependencies (database connections etc).
 
-@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #main-class }
+@@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickstartApp.scala) { #main-class }
 
-Notice that we've separated out the `UserRoutes` trait, in which we'll put all our actual route definitions.
+Notice that we've separated out the `UserRoutes` class, in which we'll put all our actual route definitions.
 This is a good pattern to follow, especially once your application starts to grow and you'll need some form of 
 compartmentalizing them into groups of routes handling specific parts of the exposed API.
-
 
 ## Binding endpoints
 
@@ -23,11 +22,10 @@ Each Akka HTTP `Route` contains one or more `akka.http.scaladsl.server.Directive
 | Remove a user      | DELETE      | /users/$ID | Confirmation message |
 | Retrieve all users | GET         | /users     | JSON payload         |
 
-In the `QuickstartServer` source file, the definition of the `Route` delegates to the routes defined in `UserRoutes`:
-`lazy val routes: Route = userRoutes`.
+In our app the definition of the `Route` is separated out into the class `UserRoutes` and available through the field `userRoutes`.
 
-In larger applications this is where we'd combine the various routes of our application into a big route that is concatenating
-the various routes of our services. We'd do this using the concat directive like this: `val route = concat(userRoutes, healthCheckRoutes, ...)`
+In larger applications we'd define separate subsystems in different places and then combine combine the various routes of our 
+application into a big using the concat directive like this: `val route = concat(UserRoutes.userRoutes, healthCheckRoutes, ...)`
 
 Let's look at the pieces of the example `Route` that bind the endpoints, HTTP methods, and message or payload for each action.
 
@@ -109,29 +107,35 @@ Below is the complete `Route` definition from the sample application:
 @@snip [UserRoutes.scala]($g8src$/scala/$package$/UserRoutes.scala) { #all-routes }
 
 Note that one might want to separate those routes into smaller route values and `concat` them together into the `userRoutes`
-value - in a similar fashion like we do in the `QuickstartServer` leading to a bit less "dense" code.
+value - allowing for separation of concerns and get smaller routing trees.
 
 ## Binding the HTTP server
 
-At the beginning of the `main` class, the example defines some implicit values that will be used by the Akka HTTP server:
+Binding the `Route` to a HTTP server on a TCP port is done through a separate `HttpServer` actor.
+ 
+The `HttpActor` ties the lifecycle of the HTTP server to its own lifecycle. This means that if the server fails to start, 
+the actor crashes and can be supervised to restart. If the actor stops, the server is unbound from its port. 
 
-@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #server-bootstrapping }
+The actor accepts a `Stop` message which makes it stop, it is not used in the example
+but shows how the actor wrapping the HTTP endpoint can be interacted with.
 
-Akka Streams uses these values:
+The `bindAndhandle` method takes three parameters; `routes`, the hostname, and the port.
+ 
+Note that startup happens asynchronously and therefore the `bindAndHandle` method returns a `Future`. 
+Interacting with an actor must only be done through messages so the `Future` is turned into a the
+`ServerStarted` message (or fails the actor by throwing) and sent to the actor itself using `context.pipeTo`.
 
-* `ActorSystem` : provides a context in which actors will run. What actors, you may wonder? Akka Streams uses actors under the hood, and the actor system defined in this `val` will be picked up and used by Streams.
-* `ActorMaterializer` : while the ActorSystem is the host of all thread pools and live actors, an ActorMaterializer is specific to Akka Streams and is what makes them run. The ActorMaterializer interprets stream descriptions into executable entities which are run on actors, and this is why it requires an ActorSystem to function.
+When the actor has gotten the signal that the server was successfully bound it switches behavior to a `running` behavior
+that will stop the server binding if stopped.
 
-Further down in `QuickstartServer.scala`, you will find the code to instantiate the server:
+@@snip [HttpServer.scala]($g8src$/scala/$package$/HttpServer.scala) { #http-server }
 
-@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #http-server }
+In `QuickstartApp.scala`, you will find the code that ties everything together by starting the various actors in a 
+root behavior. By watching the two actors and not handling the `Terminated` message we make sure that if either
+of them stops the root behavior crashes and stops the `ActorSystem` itself. 
 
-The `bindAndhandle` method only takes three parameters; `routes`, the hostname, and the port. That's it! When this program runs--as you've seen--it starts an Akka HTTP server on localhost port 8080. Note that startup happens asynchronously and therefore the `bindAndHandle` method returns a `Future`.
+@@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickstartApp.scala) { #main-class }
 
-## The complete server code
 
-Here is the complete server code used in the sample:
-
-@@snip [QuickstartServer.scala]($g8src$/scala/$package$/QuickstartServer.scala) { #quick-start-server }
 
 Let's move on to the actor that handles registration.

@@ -60,7 +60,7 @@ The output should look something like this:
 [info] Loading global plugins from /Users/x/.sbt/0.13/plugins
 ...
 [info] Running com.example.QuickstartServer
-Server online at http://localhost:8080/
+[2019-10-24 15:26:39,182] [INFO] [$package$.HttpServer$] [HelloAkkaHttpServer-akka.actor.default-dispatcher-3] [akka://HelloAkkaHttpServer/user/HttpServer] - Server online at http://127.0.0.1:8080/
 ```
 
 The Akka HTTP server is now running, and you can test it by sending simple HTTP requests.
@@ -72,7 +72,7 @@ To restart your application each time a change is detected, run `~reStart`.
 
 The user registry example contains functionality for adding, retrieving, or deleting a single user and for  retrieving all users. Akka HTTP provides a [domain-specific language](https://en.wikipedia.org/wiki/Domain-specific_language) (DSL) to simplify the definition of endpoints as a `Route`. In this example, a `Route` defines: the paths `/users` and `/user`, the available HTTP methods, and when applicable, parameters or payloads.
 
-When the example app starts up, it creates an ActorSystem with a `userRegistryActor` and binds the defined routes to a port, in this case, `localhost:8080`. When the endpoints are invoked, they interact with the `userRegistryActor`, which contains the business logic. The diagram below illustrates runtime behavior, where that the HTTP server receives for the defined `route` endpoints, which are handled by the `userRegistryActor`:
+When the example app starts up, it creates an ActorSystem with a `UserRegistry` Actor and binds the defined routes to a port, in this case, `localhost:8080`. When the endpoints are invoked, they interact with the `UserRegistry` Actor, which contains the business logic. The diagram below illustrates runtime behavior, where that the HTTP server receives for the defined `route` endpoints, which are handled by the `userRegistry` actor:
 
 ![Architecture](images/hello-akka-http.png)
 
@@ -177,10 +177,11 @@ Congratulations, you just ran and exercised your first Akka HTTP app! You got a 
 
 The example is implemented in the following four source files:
 
-* `QuickstartServer.scala` -- contains the main class which sets-up and all actors, it runs the Akka HTTP `routes`.
-* `UserRoutes.scala` -- contains Akka HTTP `routes` that the Server will serve.
-* `UserRegistryActor.scala` -- implements the actor that handles registration.
-* `JsonSupport.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses.
+* `QuickstartApp.scala` -- contains the main method which bootstraps the application 
+* `UserRoutes.scala` -- Akka HTTP `routes` defining exposed endpoints
+* `HttpServer.scala` -- Bindes routes to a HTTP port and manages the lifecycle of that binding
+* `UserRegistry.scala` -- the actor which handles the registration requests
+* `JsonFormats.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses
 
 First, let's dissect the backend logic.
 
