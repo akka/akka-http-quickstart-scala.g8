@@ -1,7 +1,7 @@
 language: scala
 scala:
-  - 2.11.12
-  - 2.12.6
+  - 2.12.8
+  - 2.13.1
 
 before_install:
   - curl -sL https://raw.githubusercontent.com/shyiko/jabba/0.11.1/install.sh | bash && . ~/.jabba/jabba.sh
@@ -13,6 +13,7 @@ cache:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
     - $HOME/.jabba/jdk
+    - $HOME/.cache/coursier
 
 script:
   - jabba use ${JDK:=adopt@~1.8.0-222}
