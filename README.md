@@ -28,7 +28,6 @@ The template comes with the following sources:
 
 * `QuickstartApp.scala` -- contains the main method which bootstraps the application 
 * `UserRoutes.scala` -- Akka HTTP `routes` defining exposed endpoints
-* `HttpServer.scala` -- Bindes routes to a HTTP port and manages the lifecycle of that binding
 * `UserRegistry.scala` -- the actor which handles the registration requests
 * `JsonFormats.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses
 

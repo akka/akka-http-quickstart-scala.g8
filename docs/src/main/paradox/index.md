@@ -60,7 +60,7 @@ The output should look something like this:
 [info] Loading global plugins from /Users/x/.sbt/0.13/plugins
 ...
 [info] Running com.example.QuickstartServer
-[2019-10-24 15:26:39,182] [INFO] [$package$.HttpServer$] [HelloAkkaHttpServer-akka.actor.default-dispatcher-3] [akka://HelloAkkaHttpServer/user/HttpServer] - Server online at http://127.0.0.1:8080/
+[2019-10-24 15:26:39,182] [INFO] [HelloAkkaHttpServer] [HelloAkkaHttpServer-akka.actor.default-dispatcher-3] [akka://HelloAkkaHttpServer/user/HttpServer] - Server online at http://127.0.0.1:8080/
 ```
 
 The Akka HTTP server is now running, and you can test it by sending simple HTTP requests.
@@ -179,7 +179,6 @@ The example is implemented in the following four source files:
 
 * `QuickstartApp.scala` -- contains the main method which bootstraps the application 
 * `UserRoutes.scala` -- Akka HTTP `routes` defining exposed endpoints
-* `HttpServer.scala` -- Bindes routes to a HTTP port and manages the lifecycle of that binding
 * `UserRegistry.scala` -- the actor which handles the registration requests
 * `JsonFormats.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses
 

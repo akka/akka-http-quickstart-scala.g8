@@ -120,7 +120,7 @@ an object representing the binding or fails if binding the HTTP route failed, fo
 
 To make sure our application stops if it cannot bind we terminate the actor system if there is a failure.
 
-@@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickStartApp.scala) { #start-http-server }
+@@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickstartApp.scala) { #start-http-server }
 
 In `QuickstartApp.scala`, you will find the code that ties everything together by starting the various actors in a 
 root behavior. By watching the user registry actor and not handling the `Terminated` message we make sure that if
