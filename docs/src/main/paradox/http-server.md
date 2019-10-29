@@ -111,28 +111,20 @@ value - allowing for separation of concerns and get smaller routing trees.
 
 ## Binding the HTTP server
 
-Binding the `Route` to a HTTP server on a TCP port is done through a separate `HttpServer` actor.
- 
-The `HttpActor` ties the lifecycle of the HTTP server to its own lifecycle. This means that if the server fails to start, 
-the actor crashes and can be supervised to restart. If the actor stops, the server is unbound from its port. 
+Binding the `Route` to a HTTP server on a TCP port is done from the root behavior actor on startup through the separate method 
+`startHttpServer`, we have introduced it to avoid accidentally accessing internal state of the bootstrap actor.
 
-The actor accepts a `Stop` message which makes it stop, it is not used in the example
-but shows how the actor wrapping the HTTP endpoint can be interacted with.
+The `bindAndhandle` method that does the actual binding takes three parameters; `routes`, the hostname, and the port.
+Note that binding happens asynchronously and therefore the `bindAndHandle` method returns a `Future` which completes with 
+an object representing the binding or fails if binding the HTTP route failed, for example if the port is already taken.
 
-The `bindAndhandle` method takes three parameters; `routes`, the hostname, and the port.
- 
-Note that startup happens asynchronously and therefore the `bindAndHandle` method returns a `Future`. 
-Interacting with an actor must only be done through messages so the `Future` is turned into a the
-`ServerStarted` message (or fails the actor by throwing) and sent to the actor itself using `context.pipeTo`.
+To make sure our application stops if it cannot bind we terminate the actor system if there is a failure.
 
-When the actor has gotten the signal that the server was successfully bound it switches behavior to a `running` behavior
-that will stop the server binding if stopped.
-
-@@snip [HttpServer.scala]($g8src$/scala/$package$/HttpServer.scala) { #http-server }
+@@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickStartApp.scala) { #start-http-server }
 
 In `QuickstartApp.scala`, you will find the code that ties everything together by starting the various actors in a 
-root behavior. By watching the two actors and not handling the `Terminated` message we make sure that if either
-of them stops the root behavior crashes and stops the `ActorSystem` itself. 
+root behavior. By watching the user registry actor and not handling the `Terminated` message we make sure that if
+ it stops or craches the root behavior crashes and stops the `ActorSystem` itself. 
 
 @@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickstartApp.scala) { #main-class }
 

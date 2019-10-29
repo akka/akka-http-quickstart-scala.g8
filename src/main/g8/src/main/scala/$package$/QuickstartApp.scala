@@ -12,6 +12,7 @@ import scala.util.Success
 //#main-class
 object QuickstartApp {
 
+  // #start-http-server
   private def startHttpServer(routes: Route, system: ActorSystem[_]): Unit = {
     // Akka HTTP still needs a classic ActorSystem to start
     implicit val classicSystem: akka.actor.ActorSystem = system.toClassic
@@ -21,12 +22,13 @@ object QuickstartApp {
     futureBinding.onComplete {
       case Success(binding) =>
         val address = binding.localAddress
-        println(s"Server started at http://\${address.getHostString}:\${address.getPort}/")
+        system.log.info("Server started at http://{}:{}/", address.getHostString, address.getPort)
       case Failure(ex) =>
-        println(s"Failed to bind HTTP endpoint, terminating system: \${ex.getMessage}")
+        system.log.error("Failed to bind HTTP endpoint, terminating system", ex)
         system.terminate()
     }
   }
+  // #start-http-server
 
   def main(args: Array[String]): Unit = {
     val rootBehavior = Behaviors.setup[Nothing] { context =>
