@@ -4,9 +4,8 @@ import $package$.UserRegistry.ActionPerformed
 
 //#json-formats
 import spray.json.DefaultJsonProtocol
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 
-object JsonFormats extends SprayJsonSupport {
+object JsonFormats  {
   // import the default encoders for primitive types (Int, String, Lists etc)
   import DefaultJsonProtocol._
 

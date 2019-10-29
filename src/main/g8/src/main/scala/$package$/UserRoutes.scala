@@ -1,6 +1,5 @@
 package $package$
 
-import scala.concurrent.duration._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Route
@@ -15,14 +14,23 @@ import akka.util.Timeout
 //#import-json-formats
 //#user-routes-class
 class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val system: ActorSystem[_]) {
+
   //#user-routes-class
+  import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
   import JsonFormats._
   //#import-json-formats
 
-  // Required by the `ask` method below
-  // in a real application we'd likely want to obtain the timeout from the app configuration
-  // with something like `system.settings.config.getDuration("my-app.routes.ask-timeout")`
-  private implicit val timeout = Timeout(5.seconds)
+  // If ask takes more time than this to complete the request is failed
+  private implicit val timeout = Timeout.create(system.settings.config.getDuration("my-app.routes.ask-timeout"))
+
+  def getUsers(): Future[Users] =
+    userRegistry.ask(GetUsers)
+  def getUser(name: String): Future[GetUserResponse] =
+    userRegistry.ask(GetUser(name, _))
+  def createUser(user: User): Future[ActionPerformed] =
+    userRegistry.ask(CreateUser(user, _))
+  def deleteUser(name: String): Future[ActionPerformed] =
+    userRegistry.ask(DeleteUser(name, _))
 
   //#all-routes
   //#users-get-post
@@ -34,13 +42,11 @@ class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val syst
         pathEnd {
           concat(
             get {
-              val users: Future[Users] = userRegistry.ask(GetUsers)
-              complete(users)
+              complete(getUsers())
             },
             post {
               entity(as[User]) { user =>
-                val userCreated: Future[ActionPerformed] = userRegistry.ask(CreateUser(user, _))
-                onSuccess(userCreated) { performed =>
+                onSuccess(createUser(user)) { performed =>
                   complete((StatusCodes.Created, performed))
                 }
               }
@@ -52,9 +58,8 @@ class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val syst
           concat(
             get {
               //#retrieve-user-info
-              val response: Future[GetUserResponse] = userRegistry.ask(GetUser(name, _))
               rejectEmptyResponse {
-                onSuccess(response) { response =>
+                onSuccess(getUser(name)) { response =>
                   complete(response.maybeUser)
                 }
               }
@@ -62,8 +67,7 @@ class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val syst
             },
             delete {
               //#users-delete-logic
-              val userDeleted: Future[ActionPerformed] = userRegistry.ask(DeleteUser(name, _))
-              onSuccess(userDeleted) { performed =>
+              onSuccess(deleteUser(name)) { performed =>
                 complete((StatusCodes.OK, performed))
               }
               //#users-delete-logic
