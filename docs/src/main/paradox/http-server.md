@@ -122,7 +122,7 @@ To make sure our application stops if it cannot bind we terminate the actor syst
 
 @@snip [QuickstartApp.scala]($g8src$/scala/$package$/QuickstartApp.scala) { #start-http-server }
 
-In `QuickstartApp.scala`, you will find the code that ties everything together by starting the various actors in a 
+In `QuickstartApp.scala`, you will also find the code that ties everything together by starting the various actors in a 
 root behavior. By watching the user registry actor and not handling the `Terminated` message we make sure that if
  it stops or craches the root behavior crashes and stops the `ActorSystem` itself. 
 

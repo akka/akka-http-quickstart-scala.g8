@@ -11,8 +11,7 @@ import scala.util.Success
 
 //#main-class
 object QuickstartApp {
-
-  // #start-http-server
+  //#start-http-server
   private def startHttpServer(routes: Route, system: ActorSystem[_]): Unit = {
     // Akka HTTP still needs a classic ActorSystem to start
     implicit val classicSystem: akka.actor.ActorSystem = system.toClassic
@@ -28,9 +27,9 @@ object QuickstartApp {
         system.terminate()
     }
   }
-  // #start-http-server
-
+  //#start-http-server
   def main(args: Array[String]): Unit = {
+    //#server-bootstrapping
     val rootBehavior = Behaviors.setup[Nothing] { context =>
       val userRegistryActor = context.spawn(UserRegistry(), "UserRegistryActor")
       context.watch(userRegistryActor)
@@ -40,8 +39,8 @@ object QuickstartApp {
 
       Behaviors.empty
     }
-
     val system = ActorSystem[Nothing](rootBehavior, "HelloAkkaHttpServer")
+    //#server-bootstrapping
   }
 }
 //#main-class

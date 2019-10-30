@@ -52,8 +52,8 @@ class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val syst
               }
             })
         },
-        //#users-get-post
         //#users-get-delete
+        //#users-get-post
         path(Segment) { name =>
           concat(
             get {
