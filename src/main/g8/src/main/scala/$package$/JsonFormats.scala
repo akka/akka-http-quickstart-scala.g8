@@ -1,12 +1,11 @@
 package $package$
 
-import $package$.UserRegistryActor.ActionPerformed
+import $package$.UserRegistry.ActionPerformed
 
-//#json-support
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
+//#json-formats
 import spray.json.DefaultJsonProtocol
 
-trait JsonSupport extends SprayJsonSupport {
+object JsonFormats  {
   // import the default encoders for primitive types (Int, String, Lists etc)
   import DefaultJsonProtocol._
 
@@ -15,4 +14,4 @@ trait JsonSupport extends SprayJsonSupport {
 
   implicit val actionPerformedJsonFormat = jsonFormat1(ActionPerformed)
 }
-//#json-support
+//#json-formats
