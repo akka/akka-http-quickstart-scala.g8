@@ -27,7 +27,7 @@ Voila the lines are gone!
 
 ## Running the application
 
-In the **Project** pane, right click the `QuickstartServer` source file. Select **Run 'QuickstartServer'**. The output should look like the output in the shell:
+In the **Project** pane, right click the `QuickstartApp` source file. Select **Run 'QuickstartApp'**. The output should look like the output in the shell:
 
 ![Running Project](images/idea-running-project.png)
 

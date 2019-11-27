@@ -4,7 +4,7 @@ Running the application
 When you ran the example for the first time, you were able to create and retrieve multiple users. Now that you understand how the example is implemented, let's confirm that the rest of the functionality works. We want to verify that:
 
 * If we try to retrieve users when none exist, we get an empty list.
-* If we try to retrieve a specific user that doesn't exist, we get an informative message.
+* If we try to retrieve a specific user that doesn't exist, we get a HTTP 404 `The requested resource could not be found` response.
 * We can delete users.
 
 To test this functionality, follow these steps. If you need reminders on starting the app or sending requests, refer to the @ref:[instructions](index.md#exercising-the-example) in the beginning.
