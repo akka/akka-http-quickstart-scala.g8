@@ -1,7 +1,6 @@
 package $package$
 
 import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.adapter._
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
@@ -12,12 +11,11 @@ import scala.util.Success
 //#main-class
 object QuickstartApp {
   //#start-http-server
-  private def startHttpServer(routes: Route, system: ActorSystem[_]): Unit = {
+  private def startHttpServer(routes: Route)(implicit system: ActorSystem[_]): Unit = {
     // Akka HTTP still needs a classic ActorSystem to start
-    implicit val classicSystem: akka.actor.ActorSystem = system.toClassic
     import system.executionContext
 
-    val futureBinding = Http().bindAndHandle(routes, "localhost", 8080)
+    val futureBinding = Http().newServerAt("localhost", 8080).bind(routes)
     futureBinding.onComplete {
       case Success(binding) =>
         val address = binding.localAddress
@@ -35,7 +33,7 @@ object QuickstartApp {
       context.watch(userRegistryActor)
 
       val routes = new UserRoutes(userRegistryActor)(context.system)
-      startHttpServer(routes.userRoutes, context.system)
+      startHttpServer(routes.userRoutes)(context.system)
 
       Behaviors.empty
     }

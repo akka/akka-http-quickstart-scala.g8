@@ -8,7 +8,6 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{ Matchers, WordSpec }
-import akka.actor.typed.scaladsl.adapter._
 
 //#set-up
 class UserRoutesSpec extends WordSpec with Matchers with ScalaFutures with ScalatestRouteTest {
@@ -19,7 +18,7 @@ class UserRoutesSpec extends WordSpec with Matchers with ScalaFutures with Scala
   lazy val testKit = ActorTestKit()
   implicit def typedSystem = testKit.system
   override def createActorSystem(): akka.actor.ActorSystem =
-    testKit.system.toClassic
+    testKit.system.classicSystem
 
   // Here we need to implement all the abstract members of UserRoutes.
   // We use the real UserRegistryActor to test it while we hit the Routes,
