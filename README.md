@@ -10,11 +10,11 @@ page.
 
 Prerequisites:
 - JDK 8
-- sbt 0.13.13 or higher
+- sbt 1.3.x or higher
 
 Open a console and run the following command to apply this template:
  ```
-sbt -Dsbt.version=1.2.8 new akka/akka-http-quickstart-scala.g8
+sbt -Dsbt.version=1.3.13 new akka/akka-http-quickstart-scala.g8
  ```
 
 This template will prompt for the following parameters. Press `Enter` if the default values suit you:
