@@ -8,6 +8,8 @@ a packaged version of this project by clicking "Create a project for me!" on the
 [Lightbend Getting Started](https://developer.lightbend.com/start/?group=akka&project=akka-http-quickstart-scala)
 page.
 
+test
+
 Prerequisites:
 - JDK 8
 - sbt 1.3.x or higher
