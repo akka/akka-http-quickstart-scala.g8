@@ -20,7 +20,7 @@ sbt -Dsbt.version=1.3.13 new akka/akka-http-quickstart-scala.g8
 This template will prompt for the following parameters. Press `Enter` if the default values suit you:
 - `name`: Becomes the name of the project.
 - `scala_version`: Specifies the Scala version for this project.
-- `akka_http_version`: Specifies which version of Akka HTTP should be used for this project.
+- `akka_http_version`: Specifies which version of Akka HTTP should be used for this project. Must be at least 10.2.0.
 - `akka_version`: Specifies which version of Akka should be used for this project. Must be at least 2.6.0.
 - `organization`: Specifies the organization for this project.
 
