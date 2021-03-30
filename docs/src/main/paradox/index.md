@@ -124,7 +124,7 @@ To retrieve a specific user, enter the following command:
 curl http://localhost:8080/users/Bill
 ```
 
-The system should respond wiht the following:
+The system should respond with the following:
 
 ```
 {"name":"Bill","age":67,"countryOfResidence":"USA"}
