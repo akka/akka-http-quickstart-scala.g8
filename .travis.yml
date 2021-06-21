@@ -1,4 +1,14 @@
 language: scala
+
+addons:
+  apt:
+    sources:
+      # Official debian package for AdoptOpenJDK from https://adoptopenjdk.net/installation.html#linux-pkg
+      - sourceline: deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ xenial main
+        key_url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    packages:
+      - adoptopenjdk-11-hotspot
+
 scala:
   - 2.12.12
   - 2.13.4
@@ -8,8 +18,15 @@ env:
     - TRAVIS_JDK=adopt@1.8.0-242
     - TRAVIS_JDK=adopt@1.11.0-6
 
-before_install: curl -Ls https://git.io/jabba | bash && . ~/.jabba/jabba.sh
-install: jabba install "$TRAVIS_JDK" && jabba use "$_" && java -Xmx32m -version
+before_install: 
+  - whereis java
+  - export JAVA_HOME=/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64
+  - export PATH=/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/bin:$PATH
+  - java -version
+  # Initialize launcher from the correct URL so that later sbt runs work out of the box.
+  # Travis' default sbt launch script refers to `repo.scala-sbt.org` for downloading the launcher
+  # which currently doesn't work any more
+  - sbt -sbt-launch-repo https://repo1.maven.org/maven2 exit
 
 # These directories are cached to S3 at the end of the build
 cache:
@@ -17,7 +34,6 @@ cache:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
     - $HOME/.gradle
-    - $HOME/.jabba/jdk
 
 script:
   ## This runs the template with the default parameters, and runs test within the templated app.
