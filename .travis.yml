@@ -8,6 +8,7 @@ addons:
         key_url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
     packages:
       - adoptopenjdk-11-hotspot
+      - adoptopenjdk-8-hotspot
 
 scala:
   - 2.12.12
@@ -15,13 +16,13 @@ scala:
 
 env:
   matrix:
-    - TRAVIS_JDK=adopt@1.8.0-242
-    - TRAVIS_JDK=adopt@1.11.0-6
+    - TRAVIS_JDK=adoptopenjdk-8-hotspot
+    - TRAVIS_JDK=adoptopenjdk-11-hotspot
 
 before_install: 
   - whereis java
-  - export JAVA_HOME=/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64
-  - export PATH=/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/bin:$PATH
+  - export JAVA_HOME=/usr/lib/jvm/$TRAVIS_JDK-amd64
+  - export PATH=/usr/lib/jvm/$TRAVIS_JDK-amd64/bin:$PATH
   - java -version
   # Initialize launcher from the correct URL so that later sbt runs work out of the box.
   # Travis' default sbt launch script refers to `repo.scala-sbt.org` for downloading the launcher
@@ -34,6 +35,9 @@ cache:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
     - $HOME/.gradle
+    
+before_script:
+  - unset _JAVA_OPTIONS
 
 script:
   ## This runs the template with the default parameters, and runs test within the templated app.
