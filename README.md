@@ -3,10 +3,7 @@
 Please see the [quickstart guide](https://developer.lightbend.com/guides/akka-http-quickstart-scala/) for a
 walk through the code.
 
-You can use [Giter8][g8] to create your own project from the quickstart. Alternatively, you can download
-a packaged version of this project by clicking "Create a project for me!" on the
-[Lightbend Getting Started](https://developer.lightbend.com/start/?group=akka&project=akka-http-quickstart-scala)
-page.
+You can use [Giter8][g8] to create your own project from the quickstart. Or, download and extract the zip file(https://example.lightbend.com/v1/download/akka-quickstart-scala?name=akka-quickstart-scala) to a convenient location.
 
 Prerequisites:
 - JDK 8
