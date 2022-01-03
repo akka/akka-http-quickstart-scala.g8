@@ -1,6 +1,12 @@
 lazy val akkaHttpVersion = "$akka_http_version$"
 lazy val akkaVersion    = "$akka_version$"
 
+// Run in a separate JVM, to make sure sbt waits until all threads have
+// finished before returning.
+// If you want to keep the application running while executing other
+// sbt tasks, consider https://github.com/spray/sbt-revolver/
+fork := true
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
