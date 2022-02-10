@@ -6,8 +6,8 @@ walk through the code.
 You can use [Giter8][g8] to create your own project from the quickstart. Or, download and extract the zip file(https://example.lightbend.com/v1/download/akka-quickstart-scala?name=akka-quickstart-scala) to a convenient location.
 
 Prerequisites:
-- JDK 8
-- sbt 1.3.x or higher
+- JDK 11
+- sbt 1.4.x or higher
 
 Open a console and run the following command to apply this template:
  ```
