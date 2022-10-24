@@ -6,7 +6,7 @@ lazy val root = project
   .enablePlugins(ScriptedPlugin)
   .settings(
     name := "akka-http-scala-seed.g8",
-    test in Test := {
+    Test / test := {
       val _ = (Test / g8Test).toTask("").value
     },
     scriptedLaunchOpts ++= List("-Xms1024m", "-Xmx1024m", "-XX:ReservedCodeCacheSize=128m", "-XX:MaxMetaspaceSize=256m", "-Xss2m", "-Dfile.encoding=UTF-8"),
