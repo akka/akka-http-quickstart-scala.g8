@@ -3,6 +3,7 @@ package $package$
 //#user-routes-spec
 //#test-top
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
+import akka.actor.typed.ActorSystem
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
@@ -17,7 +18,7 @@ class UserRoutesSpec extends AnyWordSpec with Matchers with ScalaFutures with Sc
   // the Akka HTTP route testkit does not yet support a typed actor system (https://github.com/akka/akka-http/issues/2036)
   // so we have to adapt for now
   lazy val testKit = ActorTestKit()
-  implicit def typedSystem = testKit.system
+  implicit def typedSystem: ActorSystem[_] = testKit.system
   override def createActorSystem(): akka.actor.ActorSystem =
     testKit.system.classicSystem
 

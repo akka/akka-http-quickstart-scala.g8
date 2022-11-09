@@ -1,5 +1,6 @@
 target/
 .idea
+.bsp
 boot/
 lib_managed/
 src_managed/
