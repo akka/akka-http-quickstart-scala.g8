@@ -21,7 +21,7 @@ class UserRoutes(userRegistry: ActorRef[UserRegistry.Command])(implicit val syst
   //#import-json-formats
 
   // If ask takes more time than this to complete the request is failed
-  private implicit val timeout = Timeout.create(system.settings.config.getDuration("my-app.routes.ask-timeout"))
+  private implicit val timeout: Timeout = Timeout.create(system.settings.config.getDuration("my-app.routes.ask-timeout"))
 
   def getUsers(): Future[Users] =
     userRegistry.ask(GetUsers)
