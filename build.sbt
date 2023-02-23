@@ -5,7 +5,7 @@ lazy val root = project
   .in(file("."))
   .enablePlugins(ScriptedPlugin)
   .settings(
-    name := "akka-http-scala-seed.g8",
+    name := "pekko-http-scala-seed.g8",
     Test / test := {
       val _ = (Test / g8Test).toTask("").value
     },

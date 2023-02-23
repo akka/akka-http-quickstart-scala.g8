@@ -1,28 +1,28 @@
-lazy val akkaHttpVersion = "$akka_http_version$"
-lazy val akkaVersion    = "$akka_version$"
-
 // Run in a separate JVM, to make sure sbt waits until all threads have
 // finished before returning.
 // If you want to keep the application running while executing other
 // sbt tasks, consider https://github.com/spray/sbt-revolver/
 fork := true
 
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
-      organization    := "$organization$",
-      scalaVersion    := "$scala_version$"
-    )),
-    name := "$name$",
-    libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-http"                % akkaHttpVersion,
-      "com.typesafe.akka" %% "akka-http-spray-json"     % akkaHttpVersion,
-      "com.typesafe.akka" %% "akka-actor-typed"         % akkaVersion,
-      "com.typesafe.akka" %% "akka-stream"              % akkaVersion,
-      "ch.qos.logback"    % "logback-classic"           % "1.2.11",
+resolvers += "Apache Snapshots" at "https://repository.apache.org/content/repositories/snapshots/"
 
-      "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion % Test,
-      "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion     % Test,
-      "org.scalatest"     %% "scalatest"                % "3.2.9"         % Test
+lazy val root = (project in file(".")).settings(
+  inThisBuild(List(organization := "$organization$", scalaVersion := "$scala_version$")),
+  name := "$name$",
+  libraryDependencies ++= {
+    val pekkoV     = "0.0.0+26592-864ee821-SNAPSHOT"
+    val pekkoHttpV = "0.0.0+4295-b475736f-SNAPSHOT"
+    val logbackV   = "1.4.5"
+    val scalatestV = "3.2.15"
+    Seq(
+      "org.apache.pekko" %% "pekko-http"                % pekkoHttpV,
+      "org.apache.pekko" %% "pekko-http-spray-json"     % pekkoHttpV,
+      "org.apache.pekko" %% "pekko-actor-typed"         % pekkoV,
+      "org.apache.pekko" %% "pekko-stream"              % pekkoV,
+      "ch.qos.logback"    % "logback-classic"           % logbackV,
+      "org.apache.pekko" %% "pekko-http-testkit"        % pekkoHttpV % Test,
+      "org.apache.pekko" %% "pekko-actor-testkit-typed" % pekkoV     % Test,
+      "org.scalatest"    %% "scalatest"                 % scalatestV % Test
     )
-  )
+  }
+)
