@@ -7,6 +7,8 @@ lazy val akkaVersion    = "$akka_version$"
 // sbt tasks, consider https://github.com/spray/sbt-revolver/
 fork := true
 
+resolvers += "Akka library repository".at("https://repo.akka.io/maven")
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
