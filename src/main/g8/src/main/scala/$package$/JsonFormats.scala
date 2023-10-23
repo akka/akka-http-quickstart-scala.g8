@@ -1,9 +1,9 @@
 package $package$
 
 import $package$.UserRegistry.ActionPerformed
-import spray.json.RootJsonFormat
 
 //#json-formats
+import spray.json.RootJsonFormat
 import spray.json.DefaultJsonProtocol
 
 object JsonFormats  {
@@ -13,6 +13,6 @@ object JsonFormats  {
   implicit val userJsonFormat: RootJsonFormat[User] = jsonFormat3(User.apply)
   implicit val usersJsonFormat: RootJsonFormat[Users] = jsonFormat1(Users.apply)
 
-  implicit val actionPerformedJsonFormat: RootJsonFormat[ActionPerformed] = jsonFormat1(ActionPerformed.apply)
+  implicit val actionPerformedJsonFormat = jsonFormat1(ActionPerformed)
 }
 //#json-formats
