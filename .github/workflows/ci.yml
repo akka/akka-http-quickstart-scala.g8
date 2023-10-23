@@ -5,12 +5,9 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: "0 0 */7 * *"
 
 jobs:
-  check:
-    name: JDK 17
+  build-test:
     if: github.repository == 'akka/akka-http-quickstart-scala.g8'
     runs-on: ubuntu-20.04
 
