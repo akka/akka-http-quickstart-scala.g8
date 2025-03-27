@@ -14,7 +14,7 @@ permissions:
 jobs:
   build-test:
     if: github.repository == 'akka/akka-http-quickstart-scala.g8'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
