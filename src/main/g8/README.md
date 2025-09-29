@@ -9,6 +9,10 @@ Sources in the sample:
 * `UserRegistry.scala` -- the actor which handles the registration requests
 * `JsonFormats.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses
 
+## Configure the resolver
+
+> The Akka dependencies are available from Akka’s secure library repository. To access them you need to use a secure, tokenized URL as specified at https://account.akka.io/token.
+
 ## Interacting with the sample
 
 After starting the sample with `sbt run` the following requests can be made:

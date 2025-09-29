@@ -1,7 +1,8 @@
 lazy val akkaHttpVersion = "$akka_http_version$"
 lazy val akkaVersion    = "$akka_version$"
 
-resolvers += "Akka library repository".at("https://repo.akka.io/maven")
+// Replace this with your tokenized resolver URL, see README.md
+resolvers += "Akka library repository".at("https://repo.akka.io/maven/github_actions")
 
 // Run in a separate JVM, to make sure sbt waits until all threads have
 // finished before returning.
