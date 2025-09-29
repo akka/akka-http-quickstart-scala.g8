@@ -11,11 +11,8 @@ Sources in the sample:
 
 ## Configure the resolver
 
-Visit https://account.akka.io/token to generate your custom resolver token and configure it in `build.sbt`:
-
-```
-resolvers += "Akka library repository".at("https://repo.akka.io/{your custom resolver here}/secure  ")
-```
+> [!TIP]
+> The Akka dependencies are available from Akka’s secure library repository. To access them you need to use a secure, tokenized URL as specified at https://account.akka.io/token.
 
 ## Interacting with the sample
 
