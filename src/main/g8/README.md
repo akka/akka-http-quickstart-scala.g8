@@ -9,6 +9,14 @@ Sources in the sample:
 * `UserRegistry.scala` -- the actor which handles the registration requests
 * `JsonFormats.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses
 
+## Configure the resolver
+
+Visit https://account.akka.io/token to generate your custom resolver token and configure it in `build.sbt`:
+
+```
+resolvers += "Akka library repository".at("https://repo.akka.io/{your custom resolver here}/secure  ")
+```
+
 ## Interacting with the sample
 
 After starting the sample with `sbt run` the following requests can be made:
