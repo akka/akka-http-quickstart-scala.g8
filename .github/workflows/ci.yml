@@ -22,6 +22,9 @@ jobs:
         # v4.1.1
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
+      - name: Run akka/github-actions-scripts
+        uses: akka/github-actions-scripts@global-action
+
       - name: Set up JDK 17
         # https://github.com/coursier/setup-action/releases
         # v1.3.5

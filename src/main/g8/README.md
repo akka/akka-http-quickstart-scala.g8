@@ -9,9 +9,12 @@ Sources in the sample:
 * `UserRegistry.scala` -- the actor which handles the registration requests
 * `JsonFormats.scala` -- converts the JSON data from requests into Scala types and from Scala types into JSON responses
 
-## Configure the resolver
+## Build Token
 
-> The Akka dependencies are available from Akka’s secure library repository. To access them you need to use a secure, tokenized URL as specified at https://account.akka.io/token.
+To build locally, you need to fetch a token at https://account.akka.io/token that you have to place into `~/.sbt/1.0/akka-commercial.sbt` file like this:
+```
+ThisBuild / resolvers += "lightbend-akka".at("your token resolver here")
+```
 
 ## Interacting with the sample
 
